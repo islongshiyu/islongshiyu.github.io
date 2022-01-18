@@ -552,21 +552,16 @@ Process finished with exit code 0
 向 `ByteBuffer` 读取数据：
 
 + 调用 `FileChannel` 的 `write()` 方法，从 `ByteBuffer` 中读取出数据写入到 `FileChannel` 中。
-
   ```java
   int writeBytes = channel.write(buf);
   ```
-
 +  调用 `ByteBuffer` 自己的 `get()` 方法。
-
   ```java
   byte b = buf.get();
   ```
-
    `get()` 方法会让 `position` 读指针后移一位，如果想重复读取数据：
-
-  + 可以调用 `rewind() ` 方法将 `position` 重新置为 `0`。
-  + 或者调用 有参`get(int i)` 方法获取索引 `i` 的内容，它不会移动读指针。
+    + 可以调用 `rewind() ` 方法将 `position` 重新置为 `0`。
+    + 或者调用 有参`get(int i)` 方法获取索引 `i` 的内容，它不会移动读指针。
 
 示例代码：
 

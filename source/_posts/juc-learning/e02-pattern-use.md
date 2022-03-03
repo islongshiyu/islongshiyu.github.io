@@ -29,9 +29,9 @@ categories: ["并发编程"]
 
 - 监控线程捕获打断异常，无异常则继续执行监控，有异常则。
 
-![](two-phase-termination.png)
+![](e02-pattern-use/two-phase-termination.png)
 
-[two-phase-termination.drawio](two-phase-termination.drawio)
+[two-phase-termination.drawio](e02-pattern-use/two-phase-termination.drawio)
 
 示例代码：
 

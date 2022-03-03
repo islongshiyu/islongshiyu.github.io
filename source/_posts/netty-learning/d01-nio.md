@@ -193,39 +193,39 @@ Process finished with exit code 0
 
 当一个容量为`10`个字节的 `ByteBuffer` 刚被创建时：
 
-![](bytebuffer-new.png)
+![](d01-nio/bytebuffer-new.png)
 
-[bytebuffer-new.drawio](bytebuffer-new.drawio)
+![bytebuffer-new.drawio](d01-nio/bytebuffer-new.drawio)
 
 切换至写模式后，`position` 切换为写入位置，`limit` 切换为写入限制切等于 `capacity`，下图为写入`4`个字节后的状态：
 
-![](bytebuffer-write-4-bytes.png)
+![](d01-nio/bytebuffer-write-4-bytes.png "")
 
-[bytebuffer-write-4-bytes.drawio](bytebuffer-write-4-bytes.drawio)
+![bytebuffer-write-4-bytes.drawio](d01-nio/bytebuffer-write-4-bytes.drawio)
 
 切换至读模式后，`position` 切换为读取位置，`limit` 切换为读取限制，调用 `flip()` 可切换为读模式，flip 的字面意思为浏览，如图所示：
 
-![](bytebuffer-flip.png)
+![](d01-nio/bytebuffer-flip.png)
 
-[bytebuffer-flip.drawio](bytebuffer-flip.drawio)
+![bytebuffer-flip.drawio](d01-nio/bytebuffer-flip.drawio)
 
 下图为读取`4`个字节后的状态：
 
-![](bytebuffer-read-4-bytes.png)
+![](d01-nio/bytebuffer-read-4-bytes.png)
 
-[bytebuffer-read-4-bytes.drawio](bytebuffer-read-4-bytes.drawio)
+![bytebuffer-read-4-bytes.drawio](d01-nio/bytebuffer-read-4-bytes.drawio)
 
 调用 `clear()` 方法后将切换至写模式并重置属性，此时状态如图所示：
 
-![](bytebuffer-clear.png)
+![](d01-nio/bytebuffer-clear.png)
 
-[bytebuffer-clear.drawio](bytebuffer-clear.drawio)
+![bytebuffer-clear.drawio](d01-nio/bytebuffer-clear.drawio)
 
 调用 `compact()` 方法将切换至写模式并把未读完的部分向前压缩，如下图所示：
 
-![](bytebuffer-compact.png)
+![](d01-nio/bytebuffer-compact.png)
 
-[bytebuffer-compact.drawio](bytebuffer-compact.drawio)
+![bytebuffer-compact.drawio](d01-nio/bytebuffer-compact.drawio)
 
 ### ByteBuffer 调试工具
 
@@ -1430,7 +1430,7 @@ Process finished with exit code 0
 
 通过编辑器打开显示如下：
 
-![](filechannel-position-gt-end.png)
+![](d01-nio/filechannel-position-gt-end.png)
 
 #### 大小
 

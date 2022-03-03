@@ -9,9 +9,9 @@ categories: ["并发编程"]
 
 Monitor 被翻译为**监视器**或**管程**，每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的 Mark Word 中就被设置指向 Monitor 对象的指针，Monitor 结构如下：
 
-![](monitor-struct.png)
+![](e03-theory-use/monitor-struct.png)
 
-[monitor-struct.drawio](monitor-struct.drawio)
+[monitor-struct.drawio](e03-theory-use/monitor-struct.drawio)
 
 - 刚开始 Monitor 中 Owner 为 null
 - 当 Thread-2 执行 `synchronized(obj)` 就会将 Monitor 的所有者 Owner 置为 Thread-2，Monitor中只能有一个 Owner

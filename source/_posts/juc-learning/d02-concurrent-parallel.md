@@ -7,7 +7,7 @@ categories: ["并发编程"]
 
 Erlang 之父  Joe Armstrong 用一张5岁小孩都能看懂的图解释了并发与并行的区别：
 
-![](concurrent-parallel.jpg)
+![](d02-concurrent-parallel/concurrent-parallel.jpg)
 
 ## 并发
 
@@ -15,13 +15,13 @@ Erlang 之父  Joe Armstrong 用一张5岁小孩都能看懂的图解释了并�
 
 一般会将这种线程轮流使用 CPU 的做法称为并发（**Concurrent**）。
 
-![](concurrency.jpg)
+![](d02-concurrent-parallel/concurrency.jpg)
 
 ## 并行
 
 多核 CPU下，每个核（core） 都可以调度运行线程，这时候线程可以是并行的，不同的线程同时使用不同的 CPU 在执行。
 
-![](parallelism.jpg)
+![](d02-concurrent-parallel/parallelism.jpg)
 
 ## 对比
 

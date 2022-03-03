@@ -22,12 +22,12 @@ categories: ["并发编程"]
 
 - 小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。
 
-![](shared-story-1.png)
+![](d05-shared-model/shared-story-1.png)
 
 - 小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。
 - 但小宋不能一天24小时使用算盘，他经常要小憩一会（sleep），又或是去吃饭上厕所（阻塞 IO 操作），有时还需要一根烟，没烟时思路全无（wait），这些情况统称为（阻塞）。
 
-![](shared-story-2.png)
+![](d05-shared-model/shared-story-2.png)
 
 - 在这些时候，算盘没利用起来（不能收钱了），小龙觉得有点不划算。
 - 另外，小付也想用用算盘，如果总是小宋占着算盘，让小付觉得不公平。
@@ -36,19 +36,19 @@ categories: ["并发编程"]
 - 最近执行的计算比较复杂，需要存储一些中间结果，而学生们的脑容量（工作内存）不够，所以小龙申请了一个笔记本（主存），把一些中间结果先记在笔记本上。
 - 计算流程是这样的：
 
-![](shared-story-3.png)
+![](d05-shared-model/shared-story-3.png)
 
 - 但是由于分时系统，有一天还是发生了事故。
 - 小宋刚读取了初始值 0 做了个 +1 运算，还没来得及写回结果。
 - 小龙老师说 ：“小宋，你的时间到了，该别人了，记住结果走吧 ”，于是小宋念叨着 ：“结果是1，结果是1...”， 不甘心地到一边待着去了（上下文切换）。
 - 小龙老师说 ：“ 小付，该你了 ”，小付看到了笔记本上还写着 0 做了一个 -1 运算，将结果 -1 写入笔记本。
 
-![](shared-story-4.png)
+![](d05-shared-model/shared-story-4.png)
 
 - 这时小付的时间也用完了，小龙老师又叫醒了小宋：“小宋，把你上次的题目算完吧”，小宋将他脑海中的结果 1 写入了笔记本。
 - 小宋和小付都觉得自己没做错，但笔记本里的结果是 1 而不是 0。
 
-[shared-story.drawio](shared-story.drawio)
+[shared-story.drawio](d05-shared-model/shared-story.drawio)
 
 ### 共享在 Java 中的体现
 
@@ -116,9 +116,9 @@ public class ThreadSharedProblem {
 
 一行代码实际上对应的是4条 JVM 指令，而 Java 的内存模型如下，完成静态变量的自增，自减需要在主存和工作内存中进行数据交换：
 
-![](shared-pro-mem.png)
+![](d05-shared-model/shared-pro-mem.png)
 
-[shared-pro-mem.drawio](shared-pro-mem.drawio)
+[shared-pro-mem.drawio](d05-shared-model/shared-pro-mem.drawio)
 
 如果是单线程以上 8 行代码是顺序执行（不会交错）没有问题：
 
@@ -309,9 +309,9 @@ public class ThreadSharedProblemSynchronized {
 
 ### synchronized 理解
 
-![](shared-pro-sychronized.png)
+![](d05-shared-model/shared-pro-sychronized.png)
 
-[shared-pro-sychronized.drawio](shared-pro-sychronized.drawio)
+[shared-pro-sychronized.drawio](d05-shared-model/shared-pro-sychronized.drawio)
 
 可以这样理解 `synchronized` ：
 
@@ -1138,9 +1138,9 @@ Exception in thread "t0" java.lang.IndexOutOfBoundsException: Index: 0, Size: 1
 
 导致这个问题的原因是，上面的代码中无论哪个线程操作的都是同一个 `MObject` 对象中的 `list` 成员变量，其内存结构如下：
 
-![](member-variable-safe-analyse.png)
+![](d05-shared-model/member-variable-safe-analyse.png)
 
-[member-variable-safe-analyse.drawio](member-variable-safe-analyse.drawio)
+[member-variable-safe-analyse.drawio](d05-shared-model/member-variable-safe-analyse.drawio)
 
 ### 局部变量线程安全分析
 
@@ -1163,9 +1163,9 @@ public class LocalVariableSafeAnalyse1 {
 ```
 
 该方法在多线程运行时，内存结构如图：
-![](local-variable-safe-analyse1.png)
+![](d05-shared-model/local-variable-safe-analyse1.png)
 
-[local-variable-safe-analyse1.drawio](local-variable-safe-analyse1.drawio)
+[local-variable-safe-analyse1.drawio](d05-shared-model/local-variable-safe-analyse1.drawio)
 
 **每个线程中的变量**`i`**都是线程私有的，因此不存在共享，是线程安全的。**
 
@@ -1212,9 +1212,9 @@ class LObj2 {
 
 其不同之处在于将成员变量 `list` 改为了局部变量，在多线程情况下，其内存结构如下：
 
-![](local-variable-safe-analyse2.png)
+![](d05-shared-model/local-variable-safe-analyse2.png)
 
-[local-variable-safe-analyse2.drawio](local-variable-safe-analyse2.drawio)
+[local-variable-safe-analyse2.drawio](d05-shared-model/local-variable-safe-analyse2.drawio)
 
 分析：
 
@@ -1921,9 +1921,9 @@ public synchronized void transfer(Account target, int amount) {
 
 因此一个对象占用的内存空间如下：
 
-![](object-mem-size.png)
+![](d05-shared-model/object-mem-size.png)
 
-[object-mem-size.drawio](object-mem-size.drawio)
+[object-mem-size.drawio](d05-shared-model/object-mem-size.drawio)
 
 ### Monitor 原理
 

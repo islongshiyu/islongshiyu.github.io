@@ -48,8 +48,6 @@ categories: ["并发编程"]
 - 这时小付的时间也用完了，小龙老师又叫醒了小宋：“小宋，把你上次的题目算完吧”，小宋将他脑海中的结果 1 写入了笔记本。
 - 小宋和小付都觉得自己没做错，但笔记本里的结果是 1 而不是 0。
 
-[shared-story.drawio](d05-shared-model/shared-story.drawio)
-
 ### 共享在 Java 中的体现
 
 两个线程对初始值为 0 的静态变量一个做自增，一个做自减，各做 5000 次，结果是 0 吗？
@@ -117,8 +115,6 @@ public class ThreadSharedProblem {
 一行代码实际上对应的是4条 JVM 指令，而 Java 的内存模型如下，完成静态变量的自增，自减需要在主存和工作内存中进行数据交换：
 
 ![](d05-shared-model/shared-pro-mem.png)
-
-[shared-pro-mem.drawio](d05-shared-model/shared-pro-mem.drawio)
 
 如果是单线程以上 8 行代码是顺序执行（不会交错）没有问题：
 
@@ -310,8 +306,6 @@ public class ThreadSharedProblemSynchronized {
 ### synchronized 理解
 
 ![](d05-shared-model/shared-pro-sychronized.png)
-
-[shared-pro-sychronized.drawio](d05-shared-model/shared-pro-sychronized.drawio)
 
 可以这样理解 `synchronized` ：
 
@@ -1140,8 +1134,6 @@ Exception in thread "t0" java.lang.IndexOutOfBoundsException: Index: 0, Size: 1
 
 ![](d05-shared-model/member-variable-safe-analyse.png)
 
-[member-variable-safe-analyse.drawio](d05-shared-model/member-variable-safe-analyse.drawio)
-
 ### 局部变量线程安全分析
 
 ```java
@@ -1164,8 +1156,6 @@ public class LocalVariableSafeAnalyse1 {
 
 该方法在多线程运行时，内存结构如图：
 ![](d05-shared-model/local-variable-safe-analyse1.png)
-
-[local-variable-safe-analyse1.drawio](d05-shared-model/local-variable-safe-analyse1.drawio)
 
 **每个线程中的变量**`i`**都是线程私有的，因此不存在共享，是线程安全的。**
 
@@ -1213,8 +1203,6 @@ class LObj2 {
 其不同之处在于将成员变量 `list` 改为了局部变量，在多线程情况下，其内存结构如下：
 
 ![](d05-shared-model/local-variable-safe-analyse2.png)
-
-[local-variable-safe-analyse2.drawio](d05-shared-model/local-variable-safe-analyse2.drawio)
 
 分析：
 
@@ -1922,8 +1910,6 @@ public synchronized void transfer(Account target, int amount) {
 因此一个对象占用的内存空间如下：
 
 ![](d05-shared-model/object-mem-size.png)
-
-[object-mem-size.drawio](d05-shared-model/object-mem-size.drawio)
 
 ### Monitor 原理
 

@@ -331,8 +331,6 @@ public class DebugMultiThreadStackFrames {
 
 发生上下文切换时，main线程程序计数器保存切换时的main线程状后，CPU 再开始调度执行 `t` 线程。
 
-[debug-thread-frames.drawio](d04-java-thread/debug-thread-frames.drawio)
-
 ## 线程常见方法
 
 | 方法名             | static   | 功能说明                                                     | 注意                                                         |
@@ -774,8 +772,6 @@ Process finished with exit code 0
 代码分析：
 
 ![](d04-java-thread/thread-join.png)
-
-[thread-join.drawio](d04-java-thread/thread-join.drawio)
 
 - 因为主线程和线程 `t1` 是并行执行的，`t1` 线程需要 `1` 秒之后才能算出 `r=10`。
 - 而主线程一开始就要打印 `r` 的结果，所以只能打印出 `r=0`。
@@ -1361,16 +1357,14 @@ Process finished with exit code 0
 
 ![](d04-java-thread/thread-five-system-state.png)
 
-[thread-five-system-state.drawio](d04-java-thread/thread-five-system-state.drawio)
+- **初始状态**：仅是在语言层面创建了线程对象，还未与操作系统线程关联。
+- **就绪状态**：指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行。
 
-- **初始状态：**仅是在语言层面创建了线程对象，还未与操作系统线程关联。
-- **就绪状态：**指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行。
+- **运行状态**：指获取了 CPU 时间片运行中的状态。
 
-- **运行状态：**指获取了 CPU 时间片运行中的状态。
+  - 当 CPU 时间片用完，会从**运行状态**转换至**就绪状态**，会导致线程的上下文切换。
 
-  - 当 CPU 时间片用完，会从**运行状态**转换至**就绪****状态**，会导致线程的上下文切换。
-
-- **阻塞状态：**
+- **阻塞状态**：
 
   - 如果调用了阻塞 API，如 BIO 读写文件，这时该线程实际不会用到 CPU，会导致线程上下文切换，进入**阻塞状态**。
   - 等 BIO 操作完毕，会由操作系统唤醒阻塞的线程，转换至**就绪状态**。
@@ -1384,8 +1378,6 @@ Process finished with exit code 0
 从 Java API 层面来讲，根据 `Thread.State` 枚举，分为六种状态：
 
 ![](d04-java-thread/thread-six-system-state.png)
-
-[thread-six-system-state.drawio](d04-java-thread/thread-six-system-state.drawio)
 
 - `NEW `线程刚被创建，但是还没有调用 `start()` 方法。
 - `RUNNABLE`当调用了 `start()` 方法之后，注意，Java API 层面的 `RUNNABLE`状态涵盖了 操作系统 层面的**就绪状态**、**运行状态**和**阻塞状态**（由于 BIO 导致的线程阻塞，在 Java 里无法区分，仍然认为是可运行）。
@@ -1544,8 +1536,6 @@ public class ThreadState {
 洗茶壶，洗茶杯，拿茶叶，或先或后，关系不大，而且同是一个人的活儿，因而可以合并成为：
 
 ![](d04-java-thread/plan-as-a-whole2.png)
-
-[plan-as-a-whole.drawio](d04-java-thread/plan-as-a-whole.drawio)
 
 代码实现：
 

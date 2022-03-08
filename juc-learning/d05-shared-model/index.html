@@ -23,32 +23,32 @@
 <meta name="description" content="本文包含以下内容：  共享问题 synchronized 线程安全分析 管程Monitor wait&#x2F;notify 线程状态转换 活跃性 Lock  共享造成的问题共享小故事 小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。    小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。 但小宋不能一天24小时使用算盘，他经常要小憩">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发编程（五）模型之共享">
-<meta property="og:url" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/index.html">
+<meta property="og:url" content="https://lsy.cool/juc-learning/d05-shared-model/index.html">
 <meta property="og:site_name" content="温故而知新">
 <meta property="og:description" content="本文包含以下内容：  共享问题 synchronized 线程安全分析 管程Monitor wait&#x2F;notify 线程状态转换 活跃性 Lock  共享造成的问题共享小故事 小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。    小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。 但小宋不能一天24小时使用算盘，他经常要小憩">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-story-1.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-story-2.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-story-3.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-story-4.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-pro-mem.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-pro-sychronized.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/member-variable-safe-analyse.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/local-variable-safe-analyse1.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/local-variable-safe-analyse2.png">
-<meta property="og:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/object-mem-size.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-1.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-2.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-3.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-4.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-pro-mem.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-pro-sychronized.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/member-variable-safe-analyse.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/local-variable-safe-analyse1.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/local-variable-safe-analyse2.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/object-mem-size.png">
 <meta property="article:published_time" content="2021-07-26T00:19:12.000Z">
-<meta property="article:modified_time" content="2022-03-08T01:25:58.809Z">
+<meta property="article:modified_time" content="2022-03-08T02:16:55.431Z">
 <meta property="article:author" content="Long Shiyu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/shared-story-1.png">
+<meta name="twitter:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-1.png">
 
 
-<link rel="canonical" href="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/">
+<link rel="canonical" href="https://lsy.cool/juc-learning/d05-shared-model/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/","path":"2021/07/26/juc-learning/d05-shared-model/","title":"并发编程（五）模型之共享"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/juc-learning/d05-shared-model/","path":"juc-learning/d05-shared-model/","title":"并发编程（五）模型之共享"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>并发编程（五）模型之共享 | 温故而知新</title>
@@ -201,7 +201,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d05-shared-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -232,7 +232,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,12 +268,12 @@
 <h2 id="共享造成的问题"><a href="#共享造成的问题" class="headerlink" title="共享造成的问题"></a>共享造成的问题</h2><h3 id="共享小故事"><a href="#共享小故事" class="headerlink" title="共享小故事"></a>共享小故事</h3><ul>
 <li>小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-1.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-1.png"></p>
 <ul>
 <li>小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。</li>
 <li>但小宋不能一天24小时使用算盘，他经常要小憩一会（sleep），又或是去吃饭上厕所（阻塞 IO 操作），有时还需要一根烟，没烟时思路全无（wait），这些情况统称为（阻塞）。</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-2.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-2.png"></p>
 <ul>
 <li>在这些时候，算盘没利用起来（不能收钱了），小龙觉得有点不划算。</li>
 <li>另外，小付也想用用算盘，如果总是小宋占着算盘，让小付觉得不公平。</li>
@@ -282,19 +282,18 @@
 <li>最近执行的计算比较复杂，需要存储一些中间结果，而学生们的脑容量（工作内存）不够，所以小龙申请了一个笔记本（主存），把一些中间结果先记在笔记本上。</li>
 <li>计算流程是这样的：</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-3.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-3.png"></p>
 <ul>
 <li>但是由于分时系统，有一天还是发生了事故。</li>
 <li>小宋刚读取了初始值 0 做了个 +1 运算，还没来得及写回结果。</li>
 <li>小龙老师说 ：“小宋，你的时间到了，该别人了，记住结果走吧 ”，于是小宋念叨着 ：“结果是1，结果是1…”， 不甘心地到一边待着去了（上下文切换）。</li>
 <li>小龙老师说 ：“ 小付，该你了 ”，小付看到了笔记本上还写着 0 做了一个 -1 运算，将结果 -1 写入笔记本。</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-4.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-4.png"></p>
 <ul>
 <li>这时小付的时间也用完了，小龙老师又叫醒了小宋：“小宋，把你上次的题目算完吧”，小宋将他脑海中的结果 1 写入了笔记本。</li>
 <li>小宋和小付都觉得自己没做错，但笔记本里的结果是 1 而不是 0。</li>
 </ul>
-<p><a href="d05-shared-model/shared-story.drawio">shared-story.drawio</a></p>
 <h3 id="共享在-Java-中的体现"><a href="#共享在-Java-中的体现" class="headerlink" title="共享在 Java 中的体现"></a>共享在 Java 中的体现</h3><p>两个线程对初始值为 0 的静态变量一个做自增，一个做自减，各做 5000 次，结果是 0 吗？</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;d05.ThreadSharedProblem&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadSharedProblem</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</span><br><span class="line">                count--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.setName(<span class="string">&quot;线程1&quot;</span>);</span><br><span class="line">        t1.start();</span><br><span class="line"></span><br><span class="line">        t2.setName(<span class="string">&quot;线程2&quot;</span>);</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        t1.join();</span><br><span class="line"></span><br><span class="line">        t2.join();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">            log.debug(<span class="string">&quot;count的值为：&#123;&#125;&quot;</span>, count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -307,8 +306,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> 9 getstatic #14 &lt;d05/ThreadSharedProblem.count : I&gt;</span><br><span class="line">12 iconst_1</span><br><span class="line">13 isub</span><br><span class="line">14 putstatic #14 &lt;d05/ThreadSharedProblem.count : I&gt;</span><br></pre></td></tr></table></figure>
 
 <p>一行代码实际上对应的是4条 JVM 指令，而 Java 的内存模型如下，完成静态变量的自增，自减需要在主存和工作内存中进行数据交换：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-pro-mem.png"></p>
-<p><a href="d05-shared-model/shared-pro-mem.drawio">shared-pro-mem.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/shared-pro-mem.png"></p>
 <p>如果是单线程以上 8 行代码是顺序执行（不会交错）没有问题：</p>
 <pre class="mermaid">
 sequenceDiagram
@@ -399,8 +397,7 @@ t1 -&gt;&gt; m:putstatic i 写入 1
 <p>执行结果：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16:09:28.935 d05.ThreadSharedProblemSynchronized [main] - count的值为：0</span><br></pre></td></tr></table></figure>
 
-<h3 id="synchronized-理解"><a href="#synchronized-理解" class="headerlink" title="synchronized 理解"></a>synchronized 理解</h3><p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-pro-sychronized.png"></p>
-<p><a href="d05-shared-model/shared-pro-sychronized.drawio">shared-pro-sychronized.drawio</a></p>
+<h3 id="synchronized-理解"><a href="#synchronized-理解" class="headerlink" title="synchronized 理解"></a>synchronized 理解</h3><p><img src="/juc-learning/d05-shared-model/shared-pro-sychronized.png"></p>
 <p>可以这样理解 <code>synchronized</code> ：</p>
 <ul>
 <li><code>synchronized(对象)</code> 中的对象，可以想象为一个房间（room），有唯一入口（门）房间只能一次进入一人进行计算，线程 t1，t2 想象成两个人。</li>
@@ -556,22 +553,19 @@ m -&gt;&gt; t1:getstatic i 读取 -1
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;t0&quot; java.lang.IndexOutOfBoundsException: Index: 0, Size: 1</span><br><span class="line">	at java.util.ArrayList.rangeCheck(ArrayList.java:659)</span><br><span class="line">	at java.util.ArrayList.remove(ArrayList.java:498)</span><br><span class="line">	at d05.MObject.m3(MemberVariableSafeAnalyse.java:39)</span><br><span class="line">	at d05.MObject.m1(MemberVariableSafeAnalyse.java:30)</span><br><span class="line">	at d05.MemberVariableSafeAnalyse.lambda$main$0(MemberVariableSafeAnalyse.java:17)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br></pre></td></tr></table></figure>
 
 <p>导致这个问题的原因是，上面的代码中无论哪个线程操作的都是同一个 <code>MObject</code> 对象中的 <code>list</code> 成员变量，其内存结构如下：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/member-variable-safe-analyse.png"></p>
-<p><a href="d05-shared-model/member-variable-safe-analyse.drawio">member-variable-safe-analyse.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/member-variable-safe-analyse.png"></p>
 <h3 id="局部变量线程安全分析"><a href="#局部变量线程安全分析" class="headerlink" title="局部变量线程安全分析"></a>局部变量线程安全分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalVariableSafeAnalyse1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>test()</code>方法字节码指令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 iconst_0</span><br><span class="line">1 istore_0</span><br><span class="line">2 iinc 0 by 1</span><br><span class="line">5 return</span><br></pre></td></tr></table></figure>
 
-<p>该方法在多线程运行时，内存结构如图：<br><img src="/2021/07/26/juc-learning/d05-shared-model/local-variable-safe-analyse1.png"></p>
-<p><a href="d05-shared-model/local-variable-safe-analyse1.drawio">local-variable-safe-analyse1.drawio</a></p>
+<p>该方法在多线程运行时，内存结构如图：<br><img src="/juc-learning/d05-shared-model/local-variable-safe-analyse1.png"></p>
 <p><strong>每个线程中的变量</strong><code>i</code><strong>都是线程私有的，因此不存在共享，是线程安全的。</strong></p>
 <p>接下来分析局部变量引用的对象是否线程安全，对上面例子的代码稍作修改后代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalVariableSafeAnalyse2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREADS = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LOOPS = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        LObj2 lObj2 = <span class="keyword">new</span> LObj2();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; THREADS; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                lObj2.m1(LOOPS);</span><br><span class="line">            &#125;, <span class="string">&quot;t&quot;</span> + i).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LObj2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m1</span><span class="params">(<span class="keyword">int</span> loops)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loops; i++) &#123;</span><br><span class="line">            m2(list);</span><br><span class="line">            m3(list);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">m2</span><span class="params">(List&lt;String&gt; list)</span> </span>&#123;</span><br><span class="line">        list.add(<span class="string">&quot;1&quot;</span>);<span class="comment">// 添加字符串1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">m3</span><span class="params">(List&lt;String&gt; list)</span> </span>&#123;</span><br><span class="line">        list.remove(<span class="number">0</span>);<span class="comment">// 移除首个元素</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>其不同之处在于将成员变量 <code>list</code> 改为了局部变量，在多线程情况下，其内存结构如下：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/local-variable-safe-analyse2.png"></p>
-<p><a href="d05-shared-model/local-variable-safe-analyse2.drawio">local-variable-safe-analyse2.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/local-variable-safe-analyse2.png"></p>
 <p>分析：</p>
 <ul>
 <li><p><code>list</code> 是局部变量，每个线程调用时会创建其不同实例，没有共享</p>
@@ -723,8 +717,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 
 
 <p>因此一个对象占用的内存空间如下：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/object-mem-size.png"></p>
-<p><a href="d05-shared-model/object-mem-size.drawio">object-mem-size.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/object-mem-size.png"></p>
 <h3 id="Monitor-原理"><a href="#Monitor-原理" class="headerlink" title="Monitor 原理"></a>Monitor 原理</h3><p><a href="/e03-theory-use/">并发实战（三）原理与应用</a></p>
 <ul>
 <li>Monitor 原理</li>
@@ -764,12 +757,12 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/07/27/juc-learning/e01-optimize-use/" rel="prev" title="并发实战（一）优化与应用">
+                <a href="/juc-learning/e01-optimize-use/" rel="prev" title="并发实战（一）优化与应用">
                   <i class="fa fa-chevron-left"></i> 并发实战（一）优化与应用
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/05/06/juc-learning/d04-java-thread/" rel="next" title="并发编程（四）爪哇之线程">
+                <a href="/juc-learning/d04-java-thread/" rel="next" title="并发编程（四）爪哇之线程">
                   并发编程（四）爪哇之线程 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

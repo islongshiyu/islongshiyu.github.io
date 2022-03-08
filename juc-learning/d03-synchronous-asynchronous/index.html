@@ -20,27 +20,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lsy.cool","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="本文阐述进程与线程的概念。 进程 程序由指令和数据组成，但是这些指令要运行，数据要读写，就必须将指令加载到 CPU，数据加载至内存。在指令运行过程中还需要用到磁盘，网络等设备，进程就是用来加载指令管理内存管理 IO 的。  当一个指令被运行，从磁盘加载这个程序的代码到内存，这时候就开启了一个进程。  进程就可以视为程序的一个实例，大部分程序都可以运行多个实例进程（例如记事本，浏览器等），也有的程序">
+<meta name="description" content="本文阐述同步与异步的概念。 概念从方法调用的角度来看，同步和异步的概念：  如果需要等待结果返回才能继续运行的话就是同步。 如果不需要等待结果返回就能继续运行就是异步。  案例同步读取文件： 12345678910@Slf4j(topic &#x3D; &quot;d03.SynchronousReadFile&quot;)public class SynchronousReadFile &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="并发编程（一）进程与线程">
-<meta property="og:url" content="https://lsy.cool/2020/03/05/juc-learning/d01-process-thread/index.html">
+<meta property="og:title" content="并发编程（三）同步与异步">
+<meta property="og:url" content="https://lsy.cool/juc-learning/d03-synchronous-asynchronous/index.html">
 <meta property="og:site_name" content="温故而知新">
-<meta property="og:description" content="本文阐述进程与线程的概念。 进程 程序由指令和数据组成，但是这些指令要运行，数据要读写，就必须将指令加载到 CPU，数据加载至内存。在指令运行过程中还需要用到磁盘，网络等设备，进程就是用来加载指令管理内存管理 IO 的。  当一个指令被运行，从磁盘加载这个程序的代码到内存，这时候就开启了一个进程。  进程就可以视为程序的一个实例，大部分程序都可以运行多个实例进程（例如记事本，浏览器等），也有的程序">
+<meta property="og:description" content="本文阐述同步与异步的概念。 概念从方法调用的角度来看，同步和异步的概念：  如果需要等待结果返回才能继续运行的话就是同步。 如果不需要等待结果返回就能继续运行就是异步。  案例同步读取文件： 12345678910@Slf4j(topic &#x3D; &quot;d03.SynchronousReadFile&quot;)public class SynchronousReadFile &amp;#123;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-05T15:58:05.000Z">
-<meta property="article:modified_time" content="2022-03-08T01:25:58.801Z">
+<meta property="article:published_time" content="2021-04-10T09:12:27.000Z">
+<meta property="article:modified_time" content="2022-03-08T02:16:55.431Z">
 <meta property="article:author" content="Long Shiyu">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://lsy.cool/2020/03/05/juc-learning/d01-process-thread/">
+<link rel="canonical" href="https://lsy.cool/juc-learning/d03-synchronous-asynchronous/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/2020/03/05/juc-learning/d01-process-thread/","path":"2020/03/05/juc-learning/d01-process-thread/","title":"并发编程（一）进程与线程"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/juc-learning/d03-synchronous-asynchronous/","path":"juc-learning/d03-synchronous-asynchronous/","title":"并发编程（三）同步与异步"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>并发编程（一）进程与线程 | 温故而知新</title>
+<title>并发编程（三）同步与异步 | 温故而知新</title>
   
 
 
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94"><span class="nav-number">3.</span> <span class="nav-text">对比</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">应用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -190,7 +190,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2020/03/05/juc-learning/d01-process-thread/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d03-synchronous-asynchronous/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -203,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          并发编程（一）进程与线程
+          并发编程（三）同步与异步
         </h1>
 
         <div class="post-meta-container">
@@ -214,14 +214,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-03-05 23:58:05" itemprop="dateCreated datePublished" datetime="2020-03-05T23:58:05+08:00">2020-03-05</time>
+      <time title="创建时间：2021-04-10 17:12:27" itemprop="dateCreated datePublished" datetime="2021-04-10T17:12:27+08:00">2021-04-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,39 +243,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本文阐述进程与线程的概念。</p>
-<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><ul>
-<li><p>程序由指令和数据组成，但是这些指令要运行，数据要读写，就必须将指令加载到 CPU，数据加载至内存。在指令运行过程中还需要用到磁盘，网络等设备，进程就是用来加载指令管理内存管理 IO 的。</p>
-</li>
-<li><p>当一个指令被运行，从磁盘加载这个程序的代码到内存，这时候就开启了一个进程。</p>
-</li>
-<li><p>进程就可以视为程序的一个实例，大部分程序都可以运行多个实例进程（例如记事本，浏览器等），也有的程序只能启动一个实例进程（例如网易云音乐360安全卫士等）。</p>
-</li>
-</ul>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
-<li><p>一个进程之内可以分为一到多个线程。</p>
-</li>
-<li><p>一个线程就是一个指令流，将指令流中的一条条指令以一定的顺序交给 CPU 执行。</p>
-</li>
-<li><p>Java 中，线程作为最小调度单位，进程作为资源分配的最小单位。 在 Windows 中进程是不活动的，只是作为线程的容器。</p>
-</li>
-</ul>
-<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><ul>
-<li><p>进程基本上相互独立的，而线程存在于进程内，是进程的一个子集。</p>
-</li>
-<li><p>进程拥有共享的资源，如内存空间等，供其内部的线程共享。</p>
-</li>
-<li><p>进程间通信较为复杂：</p>
+        <p>本文阐述同步与异步的概念。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>从方法调用的角度来看，同步和异步的概念：</p>
 <ul>
-<li>同一台计算机的进程通信称为 IPC（Inter-process communication）。</li>
-<li>不同计算机之间的进程通信，需要通过网络，并遵守共同的协议，例如 HTTP。</li>
+<li>如果需要等待结果返回才能继续运行的话就是同步。</li>
+<li>如果不需要等待结果返回就能继续运行就是异步。</li>
 </ul>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>同步读取文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;d03.SynchronousReadFile&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchronousReadFile</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ResourceReadUtil.read(Constants.ULTRA_MAN_MP4_RES_PATH);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(log.isDebugEnabled())&#123;</span><br><span class="line">            log.debug(<span class="string">&quot;开始做其他事情...&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>异步读取文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;d03.AsynchronousReadFile&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsynchronousReadFile</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; ResourceReadUtil.read(Constants.ULTRA_MAN_MP4_RES_PATH)).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">            log.debug(<span class="string">&quot;开始做其他事情...&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多线程可以使方法的执行变成异步的（即不用干巴巴的等着），比如说读取磁盘文件时，假设读取操作花费了5秒，如果没有线程的调度机制，这5秒调用者什么都做不了，其他代码都得暂停……</p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ul>
+<li><p>比如在项目中，视频文件需要转换格式等操作比较费时，这时开一个新线程处理视频转换，避免阻塞主线程。</p>
 </li>
-<li><p>线程通信相对简单，因为它们共享进程内的内存，一个例子是多个线程可以访问同一个共享变量。</p>
+<li><p>Tomcat 的异步 Servlet （Servlet3.0）也是类似的目的，让用户线程处理耗时较长的操作，避免阻塞 Tomcat 的工作线程。</p>
 </li>
-<li><p>线程更轻量，线程上下文切换成本一般上要比进程上下文切换低。</p>
+<li><p>UI 程序中，开线程进行其他操作，避免阻塞 UI 线程。</p>
 </li>
 </ul>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p><a href="../e01-optimize-use/#%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%85%E5%88%86%E5%88%A9%E7%94%A8%E5%A4%84%E7%90%86%E5%99%A8">使用多线程充分利用处理器</a></p>
 
     </div>
 
@@ -307,11 +296,14 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/03/22/juc-learning/d02-concurrent-parallel/" rel="prev" title="并发编程（二）进程与线程">
-                  <i class="fa fa-chevron-left"></i> 并发编程（二）进程与线程
+                <a href="/juc-learning/d04-java-thread/" rel="prev" title="并发编程（四）爪哇之线程">
+                  <i class="fa fa-chevron-left"></i> 并发编程（四）爪哇之线程
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/juc-learning/d02-concurrent-parallel/" rel="next" title="并发编程（二）进程与线程">
+                  并发编程（二）进程与线程 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

@@ -184,7 +184,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/08/16/netty-learning/d01-nio/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/netty-learning/d01-nio/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -197,7 +197,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/16/netty-learning/d01-nio/" class="post-title-link" itemprop="url">Netty（一）NIO</a>
+          <a href="/netty-learning/d01-nio/" class="post-title-link" itemprop="url">Netty（一）NIO</a>
         </h2>
 
         <div class="post-meta-container">
@@ -215,7 +215,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,23 +330,17 @@ end
 <li>limit</li>
 </ul>
 <p>当一个容量为<code>10</code>个字节的 <code>ByteBuffer</code> 刚被创建时：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-new.png"></p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-new.drawio" alt="bytebuffer-new.drawio"></p>
+<p><img src="/netty-learning/d01-nio/bytebuffer-new.png"></p>
 <p>切换至写模式后，<code>position</code> 切换为写入位置，<code>limit</code> 切换为写入限制切等于 <code>capacity</code>，下图为写入<code>4</code>个字节后的状态：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-write-4-bytes.png"></p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-write-4-bytes.drawio" alt="bytebuffer-write-4-bytes.drawio"></p>
+<p><img src="/netty-learning/d01-nio/bytebuffer-write-4-bytes.png"></p>
 <p>切换至读模式后，<code>position</code> 切换为读取位置，<code>limit</code> 切换为读取限制，调用 <code>flip()</code> 可切换为读模式，flip 的字面意思为浏览，如图所示：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-flip.png"></p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-flip.drawio" alt="bytebuffer-flip.drawio"></p>
+<p><img src="/netty-learning/d01-nio/bytebuffer-flip.png"></p>
 <p>下图为读取<code>4</code>个字节后的状态：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-read-4-bytes.png"></p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-read-4-bytes.drawio" alt="bytebuffer-read-4-bytes.drawio"></p>
+<p><img src="/netty-learning/d01-nio/bytebuffer-read-4-bytes.png"></p>
 <p>调用 <code>clear()</code> 方法后将切换至写模式并重置属性，此时状态如图所示：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-clear.png"></p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-clear.drawio" alt="bytebuffer-clear.drawio"></p>
+<p><img src="/netty-learning/d01-nio/bytebuffer-clear.png"></p>
 <p>调用 <code>compact()</code> 方法将切换至写模式并把未读完的部分向前压缩，如下图所示：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-compact.png"></p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/bytebuffer-compact.drawio" alt="bytebuffer-compact.drawio"></p>
+<p><img src="/netty-learning/d01-nio/bytebuffer-compact.png"></p>
 <h3 id="ByteBuffer-调试工具"><a href="#ByteBuffer-调试工具" class="headerlink" title="ByteBuffer 调试工具"></a>ByteBuffer 调试工具</h3><p>提供一个可直观显示 <code>ByteBuffer</code> 内部结构属性的调式工具源码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ByteBufferUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">char</span>[] BYTE2CHAR = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">256</span>];</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">char</span>[] HEXDUMP_TABLE = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">256</span> * <span class="number">4</span>];</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] HEXPADDING = <span class="keyword">new</span> String[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] HEXDUMP_ROWPREFIXES = <span class="keyword">new</span> String[<span class="number">65536</span> &gt;&gt;&gt; <span class="number">4</span>];</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] BYTE2HEX = <span class="keyword">new</span> String[<span class="number">256</span>];</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] BYTEPADDING = <span class="keyword">new</span> String[<span class="number">16</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">char</span>[] DIGITS = <span class="string">&quot;0123456789abcdef&quot;</span>.toCharArray();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++) &#123;</span><br><span class="line">            HEXDUMP_TABLE[i &lt;&lt; <span class="number">1</span>] = DIGITS[i &gt;&gt;&gt; <span class="number">4</span> &amp; <span class="number">0x0F</span>];</span><br><span class="line">            HEXDUMP_TABLE[(i &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>] = DIGITS[i &amp; <span class="number">0x0F</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the lookup table for hex dump paddings</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; HEXPADDING.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> padding = HEXPADDING.length - i;</span><br><span class="line">            StringBuilder buf = <span class="keyword">new</span> StringBuilder(padding * <span class="number">3</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; padding; j++) &#123;</span><br><span class="line">                buf.append(<span class="string">&quot;   &quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            HEXPADDING[i] = buf.toString();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the lookup table for the start-offset header in each row (up to 64KiB).</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; HEXDUMP_ROWPREFIXES.length; i++) &#123;</span><br><span class="line">            StringBuilder buf = <span class="keyword">new</span> StringBuilder(<span class="number">12</span>);</span><br><span class="line">            buf.append(NEWLINE);</span><br><span class="line">            buf.append(Long.toHexString((<span class="keyword">long</span>) i &lt;&lt; <span class="number">4</span> &amp; <span class="number">0xFFFFFFFFL</span> | <span class="number">0x100000000L</span>));</span><br><span class="line">            buf.setCharAt(buf.length() - <span class="number">9</span>, <span class="string">&#x27;|&#x27;</span>);</span><br><span class="line">            buf.append(<span class="string">&#x27;|&#x27;</span>);</span><br><span class="line">            HEXDUMP_ROWPREFIXES[i] = buf.toString();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the lookup table for byte-to-hex-dump conversion</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; BYTE2HEX.length; i++) &#123;</span><br><span class="line">            BYTE2HEX[i] = <span class="string">&#x27; &#x27;</span> + StringUtil.byteToHexStringPadded(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the lookup table for byte dump paddings</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; BYTEPADDING.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> padding = BYTEPADDING.length - i;</span><br><span class="line">            StringBuilder buf = <span class="keyword">new</span> StringBuilder(padding);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; padding; j++) &#123;</span><br><span class="line">                buf.append(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            BYTEPADDING[i] = buf.toString();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the lookup table for byte-to-char conversion</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; BYTE2CHAR.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= <span class="number">0x1f</span> || i &gt;= <span class="number">0x7f</span>) &#123;</span><br><span class="line">                BYTE2CHAR[i] = <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                BYTE2CHAR[i] = (<span class="keyword">char</span>) i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打印所有内容</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> buffer &#123;<span class="doctag">@link</span> ByteBuffer&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">debugAll</span><span class="params">(ByteBuffer buffer)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> oldlimit = buffer.limit();</span><br><span class="line">        buffer.limit(buffer.capacity());</span><br><span class="line">        StringBuilder origin = <span class="keyword">new</span> StringBuilder(<span class="number">256</span>);</span><br><span class="line">        appendPrettyHexDump(origin, buffer, <span class="number">0</span>, buffer.capacity());</span><br><span class="line">        System.out.println(<span class="string">&quot;+--------+-------------------- all ------------------------+----------------+&quot;</span>);</span><br><span class="line">        System.out.printf(<span class="string">&quot;position: [%d], limit: [%d]\n&quot;</span>, buffer.position(), oldlimit);</span><br><span class="line">        System.out.println(origin);</span><br><span class="line">        buffer.limit(oldlimit);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打印可读取内容</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> buffer &#123;<span class="doctag">@link</span> ByteBuffer&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">debugRead</span><span class="params">(ByteBuffer buffer)</span> </span>&#123;</span><br><span class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder(<span class="number">256</span>);</span><br><span class="line">        appendPrettyHexDump(builder, buffer, buffer.position(), buffer.limit() - buffer.position());</span><br><span class="line">        System.out.println(<span class="string">&quot;+--------+-------------------- read -----------------------+----------------+&quot;</span>);</span><br><span class="line">        System.out.printf(<span class="string">&quot;position: [%d], limit: [%d]\n&quot;</span>, buffer.position(), buffer.limit());</span><br><span class="line">        System.out.println(builder);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ByteBuffer buffer = ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">        buffer.put(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>, <span class="number">100</span>&#125;);</span><br><span class="line">        debugAll(buffer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">appendPrettyHexDump</span><span class="params">(StringBuilder dump, ByteBuffer buf, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (isOutOfBounds(offset, length, buf.capacity())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException(</span><br><span class="line">                    <span class="string">&quot;expected: &quot;</span> + <span class="string">&quot;0 &lt;= offset(&quot;</span> + offset + <span class="string">&quot;) &lt;= offset + length(&quot;</span> + length</span><br><span class="line">                            + <span class="string">&quot;) &lt;= &quot;</span> + <span class="string">&quot;buf.capacity(&quot;</span> + buf.capacity() + <span class="string">&#x27;)&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        dump.append(<span class="string">&quot;         +-------------------------------------------------+&quot;</span>).append(NEWLINE).append(<span class="string">&quot;         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |&quot;</span>).append(NEWLINE).append(<span class="string">&quot;+--------+-------------------------------------------------+----------------+&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> fullRows = length &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> remainder = length &amp; <span class="number">0xF</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Dump the rows which have 16 bytes.</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; fullRows; row++) &#123;</span><br><span class="line">            <span class="keyword">int</span> rowStartIndex = (row &lt;&lt; <span class="number">4</span>) + offset;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Per-row prefix.</span></span><br><span class="line">            appendHexDumpRowPrefix(dump, row, rowStartIndex);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Hex dump</span></span><br><span class="line">            <span class="keyword">int</span> rowEndIndex = rowStartIndex + <span class="number">16</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = rowStartIndex; j &lt; rowEndIndex; j++) &#123;</span><br><span class="line">                dump.append(BYTE2HEX[getUnsignedByte(buf, j)]);</span><br><span class="line">            &#125;</span><br><span class="line">            dump.append(<span class="string">&quot; |&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ASCII dump</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = rowStartIndex; j &lt; rowEndIndex; j++) &#123;</span><br><span class="line">                dump.append(BYTE2CHAR[getUnsignedByte(buf, j)]);</span><br><span class="line">            &#125;</span><br><span class="line">            dump.append(<span class="string">&#x27;|&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Dump the last row which has less than 16 bytes.</span></span><br><span class="line">        <span class="keyword">if</span> (remainder != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> rowStartIndex = (fullRows &lt;&lt; <span class="number">4</span>) + offset;</span><br><span class="line">            appendHexDumpRowPrefix(dump, fullRows, rowStartIndex);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Hex dump</span></span><br><span class="line">            <span class="keyword">int</span> rowEndIndex = rowStartIndex + remainder;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = rowStartIndex; j &lt; rowEndIndex; j++) &#123;</span><br><span class="line">                dump.append(BYTE2HEX[getUnsignedByte(buf, j)]);</span><br><span class="line">            &#125;</span><br><span class="line">            dump.append(HEXPADDING[remainder]);</span><br><span class="line">            dump.append(<span class="string">&quot; |&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Ascii dump</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = rowStartIndex; j &lt; rowEndIndex; j++) &#123;</span><br><span class="line">                dump.append(BYTE2CHAR[getUnsignedByte(buf, j)]);</span><br><span class="line">            &#125;</span><br><span class="line">            dump.append(BYTEPADDING[remainder]);</span><br><span class="line">            dump.append(<span class="string">&#x27;|&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        dump.append(NEWLINE).append(<span class="string">&quot;+--------+-------------------------------------------------+----------------+&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">appendHexDumpRowPrefix</span><span class="params">(StringBuilder dump, <span class="keyword">int</span> row, <span class="keyword">int</span> rowStartIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (row &lt; HEXDUMP_ROWPREFIXES.length) &#123;</span><br><span class="line">            dump.append(HEXDUMP_ROWPREFIXES[row]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            dump.append(NEWLINE);</span><br><span class="line">            dump.append(Long.toHexString(rowStartIndex &amp; <span class="number">0xFFFFFFFFL</span> | <span class="number">0x100000000L</span>));</span><br><span class="line">            dump.setCharAt(dump.length() - <span class="number">9</span>, <span class="string">&#x27;|&#x27;</span>);</span><br><span class="line">            dump.append(<span class="string">&#x27;|&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">short</span> <span class="title">getUnsignedByte</span><span class="params">(ByteBuffer buffer, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">short</span>) (buffer.get(index) &amp; <span class="number">0xFF</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -490,7 +484,7 @@ end
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc</span><br></pre></td></tr></table></figure>
 
 <p>通过编辑器打开显示如下：</p>
-<p><img src="/2021/08/16/netty-learning/d01-nio/filechannel-position-gt-end.png"></p>
+<p><img src="/netty-learning/d01-nio/filechannel-position-gt-end.png"></p>
 <h4 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h4><p>使用 <code>Channel</code> 的 <code>size()</code> 方法可以获取文件的大小。</p>
 <h4 id="强制写入"><a href="#强制写入" class="headerlink" title="强制写入"></a>强制写入</h4><p>操作系统出于性能的考虑，会将数据缓存，不是立刻写入磁盘。可以调用 <code>channel.force(true);</code> 方法将文件内容和元数据（文件的权限等信息）立刻写入磁盘。</p>
 <h3 id="FileChannel-传输数据"><a href="#FileChannel-传输数据" class="headerlink" title="FileChannel 传输数据"></a>FileChannel 传输数据</h3><p><code>FileChannel</code> 的 <code>transferTo</code> 方法可以高效率的将源文件数据传输至目标文件中：</p>
@@ -525,7 +519,7 @@ end
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/07/28/juc-learning/e03-theory-use/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/e03-theory-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -538,7 +532,7 @@ end
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/28/juc-learning/e03-theory-use/" class="post-title-link" itemprop="url">并发实战（三）原理与应用</a>
+          <a href="/juc-learning/e03-theory-use/" class="post-title-link" itemprop="url">并发实战（三）原理与应用</a>
         </h2>
 
         <div class="post-meta-container">
@@ -556,7 +550,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -579,7 +573,7 @@ end
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="Monitor-原理"><a href="#Monitor-原理" class="headerlink" title="Monitor 原理"></a>Monitor 原理</h2><p>Monitor 被翻译为<strong>监视器</strong>或<strong>管程</strong>，每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的 Mark Word 中就被设置指向 Monitor 对象的指针，Monitor 结构如下：</p>
-<p><img src="/2021/07/28/juc-learning/e03-theory-use/monitor-struct.png"></p>
+<p><img src="/juc-learning/e03-theory-use/monitor-struct.png"></p>
 <p><a href="e03-theory-use/monitor-struct.drawio">monitor-struct.drawio</a></p>
 <ul>
 <li><p>刚开始 Monitor 中 Owner 为 null</p>
@@ -650,7 +644,7 @@ end
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/07/28/juc-learning/e02-pattern-use/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/e02-pattern-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -663,7 +657,7 @@ end
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/28/juc-learning/e02-pattern-use/" class="post-title-link" itemprop="url">并发实战（二）模式与应用</a>
+          <a href="/juc-learning/e02-pattern-use/" class="post-title-link" itemprop="url">并发实战（二）模式与应用</a>
         </h2>
 
         <div class="post-meta-container">
@@ -681,7 +675,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -723,7 +717,7 @@ end
 <li><p>监控线程捕获打断异常，无异常则继续执行监控，有异常则。</p>
 </li>
 </ul>
-<p><img src="/2021/07/28/juc-learning/e02-pattern-use/two-phase-termination.png"></p>
+<p><img src="/juc-learning/e02-pattern-use/two-phase-termination.png"></p>
 <p><a href="e02-pattern-use/two-phase-termination.drawio">two-phase-termination.drawio</a></p>
 <p>示例代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;e02.TwoPhaseTermination&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwoPhaseTermination</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        TwoPhaseTerminationMonitor monitor = <span class="keyword">new</span> TwoPhaseTerminationMonitor();</span><br><span class="line"></span><br><span class="line">        monitor.start();<span class="comment">//开始监控</span></span><br><span class="line"></span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line">        monitor.stop();<span class="comment">//停止监控</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j(topic = &quot;e02.TwoPhaseTerminationMonitor&quot;)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TwoPhaseTerminationMonitor</span> </span>&#123;</span><br><span class="line">    Thread thread;<span class="comment">//监控器线程</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 开始监控</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        thread = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (Thread.currentThread().isInterrupted()) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                        log.debug(<span class="string">&quot;料理后事释放资源...&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;<span class="comment">//释放完毕退出</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    TimeUnit.SECONDS.sleep(<span class="number">2</span>);<span class="comment">//被打断情况1：睡眠时被打断，此时若被打断则会清空打断标记，处理异常时需要重新设置打断标记</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                        log.debug(<span class="string">&quot;执行监控...&quot;</span>);<span class="comment">//被打断情况2：正常运行时被打断，此时不会清空打断标记，继续执行本次操作，下次循环结束运行</span></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line"></span><br><span class="line">                    Thread.currentThread().interrupt();<span class="comment">//重新设置打断标记 如果不设置则会因为调用阻塞状态线程的interrupt会清空打断标记而无法终止程序</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 停止监控 设置打断标记即可</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        thread.interrupt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -752,7 +746,7 @@ end
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/07/27/juc-learning/e01-optimize-use/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/e01-optimize-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -765,7 +759,7 @@ end
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/27/juc-learning/e01-optimize-use/" class="post-title-link" itemprop="url">并发实战（一）优化与应用</a>
+          <a href="/juc-learning/e01-optimize-use/" class="post-title-link" itemprop="url">并发实战（一）优化与应用</a>
         </h2>
 
         <div class="post-meta-container">
@@ -783,7 +777,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -888,7 +882,7 @@ end
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/07/26/juc-learning/d05-shared-model/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d05-shared-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -901,7 +895,7 @@ end
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/26/juc-learning/d05-shared-model/" class="post-title-link" itemprop="url">并发编程（五）模型之共享</a>
+          <a href="/juc-learning/d05-shared-model/" class="post-title-link" itemprop="url">并发编程（五）模型之共享</a>
         </h2>
 
         <div class="post-meta-container">
@@ -919,7 +913,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -955,12 +949,12 @@ end
 <h2 id="共享造成的问题"><a href="#共享造成的问题" class="headerlink" title="共享造成的问题"></a>共享造成的问题</h2><h3 id="共享小故事"><a href="#共享小故事" class="headerlink" title="共享小故事"></a>共享小故事</h3><ul>
 <li>小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-1.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-1.png"></p>
 <ul>
 <li>小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。</li>
 <li>但小宋不能一天24小时使用算盘，他经常要小憩一会（sleep），又或是去吃饭上厕所（阻塞 IO 操作），有时还需要一根烟，没烟时思路全无（wait），这些情况统称为（阻塞）。</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-2.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-2.png"></p>
 <ul>
 <li>在这些时候，算盘没利用起来（不能收钱了），小龙觉得有点不划算。</li>
 <li>另外，小付也想用用算盘，如果总是小宋占着算盘，让小付觉得不公平。</li>
@@ -969,19 +963,18 @@ end
 <li>最近执行的计算比较复杂，需要存储一些中间结果，而学生们的脑容量（工作内存）不够，所以小龙申请了一个笔记本（主存），把一些中间结果先记在笔记本上。</li>
 <li>计算流程是这样的：</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-3.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-3.png"></p>
 <ul>
 <li>但是由于分时系统，有一天还是发生了事故。</li>
 <li>小宋刚读取了初始值 0 做了个 +1 运算，还没来得及写回结果。</li>
 <li>小龙老师说 ：“小宋，你的时间到了，该别人了，记住结果走吧 ”，于是小宋念叨着 ：“结果是1，结果是1…”， 不甘心地到一边待着去了（上下文切换）。</li>
 <li>小龙老师说 ：“ 小付，该你了 ”，小付看到了笔记本上还写着 0 做了一个 -1 运算，将结果 -1 写入笔记本。</li>
 </ul>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-story-4.png"></p>
+<p><img src="/juc-learning/d05-shared-model/shared-story-4.png"></p>
 <ul>
 <li>这时小付的时间也用完了，小龙老师又叫醒了小宋：“小宋，把你上次的题目算完吧”，小宋将他脑海中的结果 1 写入了笔记本。</li>
 <li>小宋和小付都觉得自己没做错，但笔记本里的结果是 1 而不是 0。</li>
 </ul>
-<p><a href="d05-shared-model/shared-story.drawio">shared-story.drawio</a></p>
 <h3 id="共享在-Java-中的体现"><a href="#共享在-Java-中的体现" class="headerlink" title="共享在 Java 中的体现"></a>共享在 Java 中的体现</h3><p>两个线程对初始值为 0 的静态变量一个做自增，一个做自减，各做 5000 次，结果是 0 吗？</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;d05.ThreadSharedProblem&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadSharedProblem</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</span><br><span class="line">                count--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.setName(<span class="string">&quot;线程1&quot;</span>);</span><br><span class="line">        t1.start();</span><br><span class="line"></span><br><span class="line">        t2.setName(<span class="string">&quot;线程2&quot;</span>);</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        t1.join();</span><br><span class="line"></span><br><span class="line">        t2.join();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">            log.debug(<span class="string">&quot;count的值为：&#123;&#125;&quot;</span>, count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -994,8 +987,7 @@ end
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> 9 getstatic #14 &lt;d05/ThreadSharedProblem.count : I&gt;</span><br><span class="line">12 iconst_1</span><br><span class="line">13 isub</span><br><span class="line">14 putstatic #14 &lt;d05/ThreadSharedProblem.count : I&gt;</span><br></pre></td></tr></table></figure>
 
 <p>一行代码实际上对应的是4条 JVM 指令，而 Java 的内存模型如下，完成静态变量的自增，自减需要在主存和工作内存中进行数据交换：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-pro-mem.png"></p>
-<p><a href="d05-shared-model/shared-pro-mem.drawio">shared-pro-mem.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/shared-pro-mem.png"></p>
 <p>如果是单线程以上 8 行代码是顺序执行（不会交错）没有问题：</p>
 <pre class="mermaid">
 sequenceDiagram
@@ -1086,8 +1078,7 @@ t1 -&gt;&gt; m:putstatic i 写入 1
 <p>执行结果：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16:09:28.935 d05.ThreadSharedProblemSynchronized [main] - count的值为：0</span><br></pre></td></tr></table></figure>
 
-<h3 id="synchronized-理解"><a href="#synchronized-理解" class="headerlink" title="synchronized 理解"></a>synchronized 理解</h3><p><img src="/2021/07/26/juc-learning/d05-shared-model/shared-pro-sychronized.png"></p>
-<p><a href="d05-shared-model/shared-pro-sychronized.drawio">shared-pro-sychronized.drawio</a></p>
+<h3 id="synchronized-理解"><a href="#synchronized-理解" class="headerlink" title="synchronized 理解"></a>synchronized 理解</h3><p><img src="/juc-learning/d05-shared-model/shared-pro-sychronized.png"></p>
 <p>可以这样理解 <code>synchronized</code> ：</p>
 <ul>
 <li><code>synchronized(对象)</code> 中的对象，可以想象为一个房间（room），有唯一入口（门）房间只能一次进入一人进行计算，线程 t1，t2 想象成两个人。</li>
@@ -1243,22 +1234,19 @@ m -&gt;&gt; t1:getstatic i 读取 -1
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;t0&quot; java.lang.IndexOutOfBoundsException: Index: 0, Size: 1</span><br><span class="line">	at java.util.ArrayList.rangeCheck(ArrayList.java:659)</span><br><span class="line">	at java.util.ArrayList.remove(ArrayList.java:498)</span><br><span class="line">	at d05.MObject.m3(MemberVariableSafeAnalyse.java:39)</span><br><span class="line">	at d05.MObject.m1(MemberVariableSafeAnalyse.java:30)</span><br><span class="line">	at d05.MemberVariableSafeAnalyse.lambda$main$0(MemberVariableSafeAnalyse.java:17)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br></pre></td></tr></table></figure>
 
 <p>导致这个问题的原因是，上面的代码中无论哪个线程操作的都是同一个 <code>MObject</code> 对象中的 <code>list</code> 成员变量，其内存结构如下：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/member-variable-safe-analyse.png"></p>
-<p><a href="d05-shared-model/member-variable-safe-analyse.drawio">member-variable-safe-analyse.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/member-variable-safe-analyse.png"></p>
 <h3 id="局部变量线程安全分析"><a href="#局部变量线程安全分析" class="headerlink" title="局部变量线程安全分析"></a>局部变量线程安全分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalVariableSafeAnalyse1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>test()</code>方法字节码指令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 iconst_0</span><br><span class="line">1 istore_0</span><br><span class="line">2 iinc 0 by 1</span><br><span class="line">5 return</span><br></pre></td></tr></table></figure>
 
-<p>该方法在多线程运行时，内存结构如图：<br><img src="/2021/07/26/juc-learning/d05-shared-model/local-variable-safe-analyse1.png"></p>
-<p><a href="d05-shared-model/local-variable-safe-analyse1.drawio">local-variable-safe-analyse1.drawio</a></p>
+<p>该方法在多线程运行时，内存结构如图：<br><img src="/juc-learning/d05-shared-model/local-variable-safe-analyse1.png"></p>
 <p><strong>每个线程中的变量</strong><code>i</code><strong>都是线程私有的，因此不存在共享，是线程安全的。</strong></p>
 <p>接下来分析局部变量引用的对象是否线程安全，对上面例子的代码稍作修改后代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalVariableSafeAnalyse2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREADS = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LOOPS = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        LObj2 lObj2 = <span class="keyword">new</span> LObj2();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; THREADS; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                lObj2.m1(LOOPS);</span><br><span class="line">            &#125;, <span class="string">&quot;t&quot;</span> + i).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LObj2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m1</span><span class="params">(<span class="keyword">int</span> loops)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loops; i++) &#123;</span><br><span class="line">            m2(list);</span><br><span class="line">            m3(list);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">m2</span><span class="params">(List&lt;String&gt; list)</span> </span>&#123;</span><br><span class="line">        list.add(<span class="string">&quot;1&quot;</span>);<span class="comment">// 添加字符串1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">m3</span><span class="params">(List&lt;String&gt; list)</span> </span>&#123;</span><br><span class="line">        list.remove(<span class="number">0</span>);<span class="comment">// 移除首个元素</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>其不同之处在于将成员变量 <code>list</code> 改为了局部变量，在多线程情况下，其内存结构如下：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/local-variable-safe-analyse2.png"></p>
-<p><a href="d05-shared-model/local-variable-safe-analyse2.drawio">local-variable-safe-analyse2.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/local-variable-safe-analyse2.png"></p>
 <p>分析：</p>
 <ul>
 <li><p><code>list</code> 是局部变量，每个线程调用时会创建其不同实例，没有共享</p>
@@ -1410,8 +1398,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 
 
 <p>因此一个对象占用的内存空间如下：</p>
-<p><img src="/2021/07/26/juc-learning/d05-shared-model/object-mem-size.png"></p>
-<p><a href="d05-shared-model/object-mem-size.drawio">object-mem-size.drawio</a></p>
+<p><img src="/juc-learning/d05-shared-model/object-mem-size.png"></p>
 <h3 id="Monitor-原理"><a href="#Monitor-原理" class="headerlink" title="Monitor 原理"></a>Monitor 原理</h3><p><a href="/e03-theory-use/">并发实战（三）原理与应用</a></p>
 <ul>
 <li>Monitor 原理</li>
@@ -1446,7 +1433,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d04-java-thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -1459,7 +1446,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/06/juc-learning/d04-java-thread/" class="post-title-link" itemprop="url">并发编程（四）爪哇之线程</a>
+          <a href="/juc-learning/d04-java-thread/" class="post-title-link" itemprop="url">并发编程（四）爪哇之线程</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1477,7 +1464,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1576,7 +1563,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 <li><p><code>jconsole</code> 图形界面工具，可查看某个 Java 进程中的线程运行状况</p>
 </li>
 </ul>
-<h2 id="线程运行原理"><a href="#线程运行原理" class="headerlink" title="线程运行原理"></a>线程运行原理</h2><h3 id="虚拟机栈与栈帧"><a href="#虚拟机栈与栈帧" class="headerlink" title="虚拟机栈与栈帧"></a>虚拟机栈与栈帧</h3><p><img src="/2021/05/06/juc-learning/d04-java-thread/jstack.png"></p>
+<h2 id="线程运行原理"><a href="#线程运行原理" class="headerlink" title="线程运行原理"></a>线程运行原理</h2><h3 id="虚拟机栈与栈帧"><a href="#虚拟机栈与栈帧" class="headerlink" title="虚拟机栈与栈帧"></a>虚拟机栈与栈帧</h3><p><img src="/juc-learning/d04-java-thread/jstack.png"></p>
 <p>Java Virtual Machine Stacks （Java 虚拟机栈）。</p>
 <p>我们都知道 JVM 中由堆、栈、方法区所组成，其中栈内存是给谁用的呢？其实就是线程，每个线程启动后，虚拟机就会为其分配一块栈内存。</p>
 <ul>
@@ -1585,12 +1572,12 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 <li><p>每个线程都会维护它自己的栈帧，每个线程只能有一个活动栈帧，对应着当前正在执行的那个方法。</p>
 </li>
 </ul>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/java-stack-thread-frame.png"></p>
+<p><img src="/juc-learning/d04-java-thread/java-stack-thread-frame.png"></p>
 <p>示例代码:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugSingleThreadStackFrames</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        method1(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> y = x + <span class="number">1</span>;</span><br><span class="line">        System.out.println(y);</span><br><span class="line">        Object m = method2();</span><br><span class="line">        System.out.println(m);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Object <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object o = <span class="keyword">new</span> Object();</span><br><span class="line">        System.out.println(o);</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>示例代码 DEBUG 图解：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/debug-single-thread-frames.png"></p>
+<p><img src="/juc-learning/d04-java-thread/debug-single-thread-frames.png"></p>
 <h3 id="线程上下文切换（Thread-Context-Switch）"><a href="#线程上下文切换（Thread-Context-Switch）" class="headerlink" title="线程上下文切换（Thread Context Switch）"></a>线程上下文切换（Thread Context Switch）</h3><p>因为以下一些原因导致 CPU 不再执行当前的线程，转而执行另一个线程的代码：</p>
 <ul>
 <li><p>线程的 CPU 时间片用完(每个线程轮流执行，看前面并行的概念)。</p>
@@ -1611,9 +1598,8 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugMultiThreadStackFrames</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(() -&gt; method1(<span class="number">20</span>));</span><br><span class="line">        t.setName(<span class="string">&quot;t&quot;</span>);</span><br><span class="line">        t.start();</span><br><span class="line">        method1(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> y = x + <span class="number">1</span>;</span><br><span class="line">        System.out.println(y);</span><br><span class="line">        Object m = method2();</span><br><span class="line">        System.out.println(m);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Object <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Object();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>示例代码 DEBUG 图解：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/debug-multi-thread-frames.png"></p>
+<p><img src="/juc-learning/d04-java-thread/debug-multi-thread-frames.png"></p>
 <p>发生上下文切换时，main线程程序计数器保存切换时的main线程状后，CPU 再开始调度执行 <code>t</code> 线程。</p>
-<p><a href="d04-java-thread/debug-thread-frames.drawio">debug-thread-frames.drawio</a></p>
 <h2 id="线程常见方法"><a href="#线程常见方法" class="headerlink" title="线程常见方法"></a>线程常见方法</h2><table>
 <thead>
 <tr>
@@ -1789,8 +1775,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">16:56:05.623 d04.ThreadJoin [main] - main线程开始运行..</span><br><span class="line">16:56:05.655 d04.ThreadJoin [main] - 结果为：0</span><br><span class="line">16:56:05.655 d04.ThreadJoin [main] - main线程结束运行..</span><br><span class="line">16:56:05.655 d04.ThreadJoin [t1] - t1线程开始运行..</span><br><span class="line">16:56:06.671 d04.ThreadJoin [t1] - t1线程结束运行..</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
 
 <p>代码分析：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/thread-join.png"></p>
-<p><a href="d04-java-thread/thread-join.drawio">thread-join.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/thread-join.png"></p>
 <ul>
 <li>因为主线程和线程 <code>t1</code> 是并行执行的，<code>t1</code> 线程需要 <code>1</code> 秒之后才能算出 <code>r=10</code>。</li>
 <li>而主线程一开始就要打印 <code>r</code> 的结果，所以只能打印出 <code>r=0</code>。</li>
@@ -1925,19 +1910,18 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 <li>Tomcat 中的 Acceptor 和 Poller 线程都是守护线程，所以 Tomcat 接收到 shutdown 命令后，不会等待它们处理完当前请求</li>
 </ul>
 <h2 id="线程五大状态"><a href="#线程五大状态" class="headerlink" title="线程五大状态"></a>线程五大状态</h2><p>从操作系统层面来看，线程有以下五大状态：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/thread-five-system-state.png"></p>
-<p><a href="d04-java-thread/thread-five-system-state.drawio">thread-five-system-state.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/thread-five-system-state.png"></p>
 <ul>
-<li><p><strong>初始状态：</strong>仅是在语言层面创建了线程对象，还未与操作系统线程关联。</p>
+<li><p><strong>初始状态</strong>：仅是在语言层面创建了线程对象，还未与操作系统线程关联。</p>
 </li>
-<li><p><strong>就绪状态：</strong>指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行。</p>
+<li><p><strong>就绪状态</strong>：指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行。</p>
 </li>
-<li><p><strong>运行状态：</strong>指获取了 CPU 时间片运行中的状态。</p>
+<li><p><strong>运行状态</strong>：指获取了 CPU 时间片运行中的状态。</p>
 <ul>
-<li>当 CPU 时间片用完，会从<strong>运行状态</strong>转换至<strong>就绪****状态</strong>，会导致线程的上下文切换。</li>
+<li>当 CPU 时间片用完，会从<strong>运行状态</strong>转换至<strong>就绪状态</strong>，会导致线程的上下文切换。</li>
 </ul>
 </li>
-<li><p><strong>阻塞状态：</strong></p>
+<li><p><strong>阻塞状态</strong>：</p>
 <ul>
 <li><p>如果调用了阻塞 API，如 BIO 读写文件，这时该线程实际不会用到 CPU，会导致线程上下文切换，进入<strong>阻塞状态</strong>。</p>
 </li>
@@ -1951,8 +1935,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 </li>
 </ul>
 <h2 id="线程六大状态"><a href="#线程六大状态" class="headerlink" title="线程六大状态"></a>线程六大状态</h2><p>从 Java API 层面来讲，根据 <code>Thread.State</code> 枚举，分为六种状态：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/thread-six-system-state.png"></p>
-<p><a href="d04-java-thread/thread-six-system-state.drawio">thread-six-system-state.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/thread-six-system-state.png"></p>
 <ul>
 <li><p><code>NEW </code>线程刚被创建，但是还没有调用 <code>start()</code> 方法。</p>
 </li>
@@ -1981,13 +1964,12 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 </ol>
 <p>哪一种办法省时间？我们能一眼看出，第一种办法好，后两种办法都窝了工。这是小事，但这是引子，可以引出生产管理等方面有用的方法来。</p>
 <p>水壶不洗，不能烧开水，因而洗水壶是烧开水的前提。没开水、没茶叶、不洗茶壶茶杯，就不能泡茶，因而这些又是泡茶的前提。它们的相互关系，可以用下边的箭头图来表示：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/plan-as-a-whole1.png"></p>
+<p><img src="/juc-learning/d04-java-thread/plan-as-a-whole1.png"></p>
 <p>从这个图上可以一眼看出，方法一总共要16分钟（而方法二、三需要20分钟）。如果要缩短工时、提高工作效率，应当主要抓烧开水这个环节，而不是抓拿茶叶等环节。同时，洗茶壶茶杯、拿茶叶总共不过4分钟，大可利用“等水开”的时间来做。</p>
 <p>是的，这好像是废话，卑之无甚高论。有如走路要用两条腿走，吃饭要一口一口吃，这些道理谁都懂得。但稍有变化，临事而迷的情况，常常是存在的。在近代工业的错综复杂的工艺过程中，往往就不是像泡茶喝这么简单了。</p>
 <p>任务多了，几百几千，甚至有好几万个任务。关系多了，错综复杂，千头万绪，往往出现“万事俱备，只欠东风”的情况。由于一两个零件没完成，耽误了一台复杂机器的出厂时间。或往往因为抓的不是关键，连夜三班，急急忙忙，完成这一环节之后，还得等待旁的环节才能装配。</p>
 <p>洗茶壶，洗茶杯，拿茶叶，或先或后，关系不大，而且同是一个人的活儿，因而可以合并成为：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/plan-as-a-whole2.png"></p>
-<p><a href="d04-java-thread/plan-as-a-whole.drawio">plan-as-a-whole.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/plan-as-a-whole2.png"></p>
 <p>代码实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;d04.ThreadPlanAsAWhole&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPlanAsAWhole</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;洗水壶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;烧开水&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">15</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;老王&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;洗茶壶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;洗茶杯&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;拿茶叶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                t1.join();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;泡茶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;小王&quot;</span>);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -2019,7 +2001,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/04/10/juc-learning/d03-synchronous-asynchronous/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d03-synchronous-asynchronous/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -2032,7 +2014,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/10/juc-learning/d03-synchronous-asynchronous/" class="post-title-link" itemprop="url">并发编程（三）同步与异步</a>
+          <a href="/juc-learning/d03-synchronous-asynchronous/" class="post-title-link" itemprop="url">并发编程（三）同步与异步</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2050,7 +2032,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2120,7 +2102,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2020/03/22/juc-learning/d02-concurrent-parallel/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d02-concurrent-parallel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -2133,7 +2115,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/22/juc-learning/d02-concurrent-parallel/" class="post-title-link" itemprop="url">并发编程（二）进程与线程</a>
+          <a href="/juc-learning/d02-concurrent-parallel/" class="post-title-link" itemprop="url">并发编程（二）进程与线程</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2151,7 +2133,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2174,12 +2156,12 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     
     <div class="post-body" itemprop="articleBody">
           <p>Erlang 之父  Joe Armstrong 用一张5岁小孩都能看懂的图解释了并发与并行的区别：</p>
-<p><img src="/2020/03/22/juc-learning/d02-concurrent-parallel/concurrent-parallel.jpg"></p>
+<p><img src="/juc-learning/d02-concurrent-parallel/concurrent-parallel.jpg"></p>
 <h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><p>在单核 CPU 下，线程实际还是<strong>串行执行</strong>的。操作系统中有一个组件叫做任务调度器，将 CPU 的时间片（ Windows 下时间片最小约为 15 毫秒）分给不同的程序使用，只是由于 CPU 在线程间（时间片很短）的切换非常快，人类感 觉是<strong>同时运行</strong>的 。总结为一句话就是：微观串行，宏观并行。</p>
 <p>一般会将这种线程轮流使用 CPU 的做法称为并发（<strong>Concurrent</strong>）。</p>
-<p><img src="/2020/03/22/juc-learning/d02-concurrent-parallel/concurrency.jpg"></p>
+<p><img src="/juc-learning/d02-concurrent-parallel/concurrency.jpg"></p>
 <h2 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h2><p>多核 CPU下，每个核（core） 都可以调度运行线程，这时候线程可以是并行的，不同的线程同时使用不同的 CPU 在执行。</p>
-<p><img src="/2020/03/22/juc-learning/d02-concurrent-parallel/parallelism.jpg"></p>
+<p><img src="/juc-learning/d02-concurrent-parallel/parallelism.jpg"></p>
 <h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>引用 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%97%E5%B8%83%C2%B7%E6%B4%BE%E5%85%8B">Rob Pike</a>（golang语言创始人） 的一段描述：</p>
 <ul>
 <li>并发（<strong>Concurrent</strong>）是同一时间应对（dealing with）多件事情的能力。</li>
@@ -2219,7 +2201,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2020/03/05/juc-learning/d01-process-thread/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d01-process-thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -2232,7 +2214,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/05/juc-learning/d01-process-thread/" class="post-title-link" itemprop="url">并发编程（一）进程与线程</a>
+          <a href="/juc-learning/d01-process-thread/" class="post-title-link" itemprop="url">并发编程（一）进程与线程</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2250,7 +2232,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">

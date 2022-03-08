@@ -23,31 +23,31 @@
 <meta name="description" content="本文包含以下内容：  如何在爪哇中创建和运行线程  如何在爪哇中查看线程  爪哇线程  API   爪哇中的线程状态   创建和运行线程使用 Thread 创建线程直接使用 Thread  创建线程，这种属于继承Thread  类方式的使用，把线程和任务合并在了一起。 1234567891011121314151617181920212223242526@Slf4j(topic &#x3D; &quot;d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发编程（四）爪哇之线程">
-<meta property="og:url" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/index.html">
+<meta property="og:url" content="https://lsy.cool/juc-learning/d04-java-thread/index.html">
 <meta property="og:site_name" content="温故而知新">
 <meta property="og:description" content="本文包含以下内容：  如何在爪哇中创建和运行线程  如何在爪哇中查看线程  爪哇线程  API   爪哇中的线程状态   创建和运行线程使用 Thread 创建线程直接使用 Thread  创建线程，这种属于继承Thread  类方式的使用，把线程和任务合并在了一起。 1234567891011121314151617181920212223242526@Slf4j(topic &#x3D; &quot;d">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/jstack.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/java-stack-thread-frame.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/debug-single-thread-frames.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/debug-multi-thread-frames.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/thread-join.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/thread-five-system-state.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/thread-six-system-state.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/plan-as-a-whole1.png">
-<meta property="og:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/plan-as-a-whole2.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/jstack.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/java-stack-thread-frame.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/debug-single-thread-frames.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/debug-multi-thread-frames.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/thread-join.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/thread-five-system-state.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/thread-six-system-state.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/plan-as-a-whole1.png">
+<meta property="og:image" content="https://lsy.cool/juc-learning/d04-java-thread/plan-as-a-whole2.png">
 <meta property="article:published_time" content="2021-05-06T05:40:32.000Z">
-<meta property="article:modified_time" content="2022-03-08T01:25:58.805Z">
+<meta property="article:modified_time" content="2022-03-08T02:16:55.431Z">
 <meta property="article:author" content="Long Shiyu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/jstack.png">
+<meta name="twitter:image" content="https://lsy.cool/juc-learning/d04-java-thread/jstack.png">
 
 
-<link rel="canonical" href="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/">
+<link rel="canonical" href="https://lsy.cool/juc-learning/d04-java-thread/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/","path":"2021/05/06/juc-learning/d04-java-thread/","title":"并发编程（四）爪哇之线程"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/juc-learning/d04-java-thread/","path":"juc-learning/d04-java-thread/","title":"并发编程（四）爪哇之线程"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>并发编程（四）爪哇之线程 | 温故而知新</title>
@@ -200,7 +200,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/2021/05/06/juc-learning/d04-java-thread/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d04-java-thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -231,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 09:25:58" itemprop="dateModified" datetime="2022-03-08T09:25:58+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,7 +330,7 @@
 <li><p><code>jconsole</code> 图形界面工具，可查看某个 Java 进程中的线程运行状况</p>
 </li>
 </ul>
-<h2 id="线程运行原理"><a href="#线程运行原理" class="headerlink" title="线程运行原理"></a>线程运行原理</h2><h3 id="虚拟机栈与栈帧"><a href="#虚拟机栈与栈帧" class="headerlink" title="虚拟机栈与栈帧"></a>虚拟机栈与栈帧</h3><p><img src="/2021/05/06/juc-learning/d04-java-thread/jstack.png"></p>
+<h2 id="线程运行原理"><a href="#线程运行原理" class="headerlink" title="线程运行原理"></a>线程运行原理</h2><h3 id="虚拟机栈与栈帧"><a href="#虚拟机栈与栈帧" class="headerlink" title="虚拟机栈与栈帧"></a>虚拟机栈与栈帧</h3><p><img src="/juc-learning/d04-java-thread/jstack.png"></p>
 <p>Java Virtual Machine Stacks （Java 虚拟机栈）。</p>
 <p>我们都知道 JVM 中由堆、栈、方法区所组成，其中栈内存是给谁用的呢？其实就是线程，每个线程启动后，虚拟机就会为其分配一块栈内存。</p>
 <ul>
@@ -339,12 +339,12 @@
 <li><p>每个线程都会维护它自己的栈帧，每个线程只能有一个活动栈帧，对应着当前正在执行的那个方法。</p>
 </li>
 </ul>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/java-stack-thread-frame.png"></p>
+<p><img src="/juc-learning/d04-java-thread/java-stack-thread-frame.png"></p>
 <p>示例代码:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugSingleThreadStackFrames</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        method1(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> y = x + <span class="number">1</span>;</span><br><span class="line">        System.out.println(y);</span><br><span class="line">        Object m = method2();</span><br><span class="line">        System.out.println(m);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Object <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object o = <span class="keyword">new</span> Object();</span><br><span class="line">        System.out.println(o);</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>示例代码 DEBUG 图解：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/debug-single-thread-frames.png"></p>
+<p><img src="/juc-learning/d04-java-thread/debug-single-thread-frames.png"></p>
 <h3 id="线程上下文切换（Thread-Context-Switch）"><a href="#线程上下文切换（Thread-Context-Switch）" class="headerlink" title="线程上下文切换（Thread Context Switch）"></a>线程上下文切换（Thread Context Switch）</h3><p>因为以下一些原因导致 CPU 不再执行当前的线程，转而执行另一个线程的代码：</p>
 <ul>
 <li><p>线程的 CPU 时间片用完(每个线程轮流执行，看前面并行的概念)。</p>
@@ -365,9 +365,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugMultiThreadStackFrames</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(() -&gt; method1(<span class="number">20</span>));</span><br><span class="line">        t.setName(<span class="string">&quot;t&quot;</span>);</span><br><span class="line">        t.start();</span><br><span class="line">        method1(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> y = x + <span class="number">1</span>;</span><br><span class="line">        System.out.println(y);</span><br><span class="line">        Object m = method2();</span><br><span class="line">        System.out.println(m);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Object <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Object();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>示例代码 DEBUG 图解：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/debug-multi-thread-frames.png"></p>
+<p><img src="/juc-learning/d04-java-thread/debug-multi-thread-frames.png"></p>
 <p>发生上下文切换时，main线程程序计数器保存切换时的main线程状后，CPU 再开始调度执行 <code>t</code> 线程。</p>
-<p><a href="d04-java-thread/debug-thread-frames.drawio">debug-thread-frames.drawio</a></p>
 <h2 id="线程常见方法"><a href="#线程常见方法" class="headerlink" title="线程常见方法"></a>线程常见方法</h2><table>
 <thead>
 <tr>
@@ -543,8 +542,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">16:56:05.623 d04.ThreadJoin [main] - main线程开始运行..</span><br><span class="line">16:56:05.655 d04.ThreadJoin [main] - 结果为：0</span><br><span class="line">16:56:05.655 d04.ThreadJoin [main] - main线程结束运行..</span><br><span class="line">16:56:05.655 d04.ThreadJoin [t1] - t1线程开始运行..</span><br><span class="line">16:56:06.671 d04.ThreadJoin [t1] - t1线程结束运行..</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
 
 <p>代码分析：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/thread-join.png"></p>
-<p><a href="d04-java-thread/thread-join.drawio">thread-join.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/thread-join.png"></p>
 <ul>
 <li>因为主线程和线程 <code>t1</code> 是并行执行的，<code>t1</code> 线程需要 <code>1</code> 秒之后才能算出 <code>r=10</code>。</li>
 <li>而主线程一开始就要打印 <code>r</code> 的结果，所以只能打印出 <code>r=0</code>。</li>
@@ -679,19 +677,18 @@
 <li>Tomcat 中的 Acceptor 和 Poller 线程都是守护线程，所以 Tomcat 接收到 shutdown 命令后，不会等待它们处理完当前请求</li>
 </ul>
 <h2 id="线程五大状态"><a href="#线程五大状态" class="headerlink" title="线程五大状态"></a>线程五大状态</h2><p>从操作系统层面来看，线程有以下五大状态：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/thread-five-system-state.png"></p>
-<p><a href="d04-java-thread/thread-five-system-state.drawio">thread-five-system-state.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/thread-five-system-state.png"></p>
 <ul>
-<li><p><strong>初始状态：</strong>仅是在语言层面创建了线程对象，还未与操作系统线程关联。</p>
+<li><p><strong>初始状态</strong>：仅是在语言层面创建了线程对象，还未与操作系统线程关联。</p>
 </li>
-<li><p><strong>就绪状态：</strong>指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行。</p>
+<li><p><strong>就绪状态</strong>：指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行。</p>
 </li>
-<li><p><strong>运行状态：</strong>指获取了 CPU 时间片运行中的状态。</p>
+<li><p><strong>运行状态</strong>：指获取了 CPU 时间片运行中的状态。</p>
 <ul>
-<li>当 CPU 时间片用完，会从<strong>运行状态</strong>转换至<strong>就绪****状态</strong>，会导致线程的上下文切换。</li>
+<li>当 CPU 时间片用完，会从<strong>运行状态</strong>转换至<strong>就绪状态</strong>，会导致线程的上下文切换。</li>
 </ul>
 </li>
-<li><p><strong>阻塞状态：</strong></p>
+<li><p><strong>阻塞状态</strong>：</p>
 <ul>
 <li><p>如果调用了阻塞 API，如 BIO 读写文件，这时该线程实际不会用到 CPU，会导致线程上下文切换，进入<strong>阻塞状态</strong>。</p>
 </li>
@@ -705,8 +702,7 @@
 </li>
 </ul>
 <h2 id="线程六大状态"><a href="#线程六大状态" class="headerlink" title="线程六大状态"></a>线程六大状态</h2><p>从 Java API 层面来讲，根据 <code>Thread.State</code> 枚举，分为六种状态：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/thread-six-system-state.png"></p>
-<p><a href="d04-java-thread/thread-six-system-state.drawio">thread-six-system-state.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/thread-six-system-state.png"></p>
 <ul>
 <li><p><code>NEW </code>线程刚被创建，但是还没有调用 <code>start()</code> 方法。</p>
 </li>
@@ -735,13 +731,12 @@
 </ol>
 <p>哪一种办法省时间？我们能一眼看出，第一种办法好，后两种办法都窝了工。这是小事，但这是引子，可以引出生产管理等方面有用的方法来。</p>
 <p>水壶不洗，不能烧开水，因而洗水壶是烧开水的前提。没开水、没茶叶、不洗茶壶茶杯，就不能泡茶，因而这些又是泡茶的前提。它们的相互关系，可以用下边的箭头图来表示：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/plan-as-a-whole1.png"></p>
+<p><img src="/juc-learning/d04-java-thread/plan-as-a-whole1.png"></p>
 <p>从这个图上可以一眼看出，方法一总共要16分钟（而方法二、三需要20分钟）。如果要缩短工时、提高工作效率，应当主要抓烧开水这个环节，而不是抓拿茶叶等环节。同时，洗茶壶茶杯、拿茶叶总共不过4分钟，大可利用“等水开”的时间来做。</p>
 <p>是的，这好像是废话，卑之无甚高论。有如走路要用两条腿走，吃饭要一口一口吃，这些道理谁都懂得。但稍有变化，临事而迷的情况，常常是存在的。在近代工业的错综复杂的工艺过程中，往往就不是像泡茶喝这么简单了。</p>
 <p>任务多了，几百几千，甚至有好几万个任务。关系多了，错综复杂，千头万绪，往往出现“万事俱备，只欠东风”的情况。由于一两个零件没完成，耽误了一台复杂机器的出厂时间。或往往因为抓的不是关键，连夜三班，急急忙忙，完成这一环节之后，还得等待旁的环节才能装配。</p>
 <p>洗茶壶，洗茶杯，拿茶叶，或先或后，关系不大，而且同是一个人的活儿，因而可以合并成为：</p>
-<p><img src="/2021/05/06/juc-learning/d04-java-thread/plan-as-a-whole2.png"></p>
-<p><a href="d04-java-thread/plan-as-a-whole.drawio">plan-as-a-whole.drawio</a></p>
+<p><img src="/juc-learning/d04-java-thread/plan-as-a-whole2.png"></p>
 <p>代码实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;d04.ThreadPlanAsAWhole&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPlanAsAWhole</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;洗水壶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;烧开水&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">15</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;老王&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;洗茶壶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;洗茶杯&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;拿茶叶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                t1.join();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;泡茶&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;小王&quot;</span>);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -778,12 +773,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/07/26/juc-learning/d05-shared-model/" rel="prev" title="并发编程（五）模型之共享">
+                <a href="/juc-learning/d05-shared-model/" rel="prev" title="并发编程（五）模型之共享">
                   <i class="fa fa-chevron-left"></i> 并发编程（五）模型之共享
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/04/10/juc-learning/d03-synchronous-asynchronous/" rel="next" title="并发编程（三）同步与异步">
+                <a href="/juc-learning/d03-synchronous-asynchronous/" rel="next" title="并发编程（三）同步与异步">
                   并发编程（三）同步与异步 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

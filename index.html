@@ -83,8 +83,8 @@
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">10</span></a></li>
         <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
   </ul>
 </nav>
@@ -122,7 +122,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Long Shiyu"
-      src="/images/avatar.jpg">
+      src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">Long Shiyu</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -130,13 +130,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -184,10 +184,131 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/linux/disk-clean/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Long Shiyu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="温故而知新">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/linux/disk-clean/" class="post-title-link" itemprop="url">Linux 磁盘清理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-07 06:10:25 / 修改时间：15:26:19" itemprop="dateCreated datePublished" datetime="2022-05-07T06:10:25+08:00">2022-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">系统运维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="查看系统磁盘信息"><a href="#查看系统磁盘信息" class="headerlink" title="查看系统磁盘信息"></a>查看系统磁盘信息</h2><p>使用 <code>df</code> 命令查看占用情况：</p>
+<ul>
+<li><code>-l</code> 选项只显示本机的文件系统。</li>
+<li><code>-h</code> 选项以人类可读的方式打印输出数据。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -lh</span><br></pre></td></tr></table></figure>
+
+<p>输出如下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">devtmpfs                 7.7G     0  7.7G    0% /dev</span><br><span class="line">tmpfs                    7.7G     0  7.7G    0% /dev/shm</span><br><span class="line">tmpfs                    7.7G  818M  6.9G   11% /run</span><br><span class="line">tmpfs                    7.7G     0  7.7G    0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root  853G  224G  630G   27% /</span><br><span class="line">/dev/sda1               1014M  199M  816M   20% /boot</span><br><span class="line">/dev/mapper/centos-home   20G  836M   20G    5% /home</span><br><span class="line">tmpfs                    1.6G     0  1.6G    0% /run/user/1002</span><br></pre></td></tr></table></figure>
+
+<p>从结果可以看见文件系统 <code>/dev/mapper/centos-root</code> 下的挂载点 <code>/</code> 已使用 <code>224G</code>。接下来就是定位到占用磁盘空间大但又无用的文件进行删除操作释放空间。</p>
+<h2 id="定位最大文件目录"><a href="#定位最大文件目录" class="headerlink" title="定位最大文件目录"></a>定位最大文件目录</h2><p>进入挂载点 <code>/</code> 目录，使用 <code>du</code> 命令以递归方式汇总每个文件或文件夹的磁盘使用情况：</p>
+<ul>
+<li><code>-h</code> 选项以人类可读的方式打印输出数据。</li>
+<li><code>--max-depth=1</code> 选项将汇总的目录深度指定为 <code>1</code> 层（即汇总当前指定目录下的二级目录的磁盘占用情况）。</li>
+<li>如果执行该命令的用户权限不足则可能需要进行提权。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cd / &amp;&amp; sudo du -h --max-depth=1</span><br></pre></td></tr></table></figure>
+
+<p>输出如下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">166M    ./boot</span><br><span class="line">0       ./dev</span><br><span class="line">805M    ./home</span><br><span class="line">0       ./proc</span><br><span class="line">826M    ./run</span><br><span class="line">0       ./sys</span><br><span class="line">36M     ./etc</span><br><span class="line">729M    ./root</span><br><span class="line">36G     ./var</span><br><span class="line">32K     ./tmp</span><br><span class="line">2.8G    ./usr</span><br><span class="line">0       ./media</span><br><span class="line">0       ./mnt</span><br><span class="line">8.3G    ./opt</span><br><span class="line">184G    ./srv</span><br><span class="line">234G    .</span><br></pre></td></tr></table></figure>
+
+<p>可以看到占用磁盘空间最大的文件目录为: <code>/srv</code> 和 <code>/var</code>。</p>
+<h2 id="分析最大文件目录"><a href="#分析最大文件目录" class="headerlink" title="分析最大文件目录"></a>分析最大文件目录</h2><p>首先使用 <code>tree</code> 命令分析 <code>/srv</code> 和 <code>/var</code> 这两个目录的结构树：</p>
+<ul>
+<li><code>-L 2</code> 选项指定目录深度为 <code>2</code>。</li>
+<li><code>-d</code> 选项只展示文件夹（不展示文件）。</li>
+<li><code>-h</code> 选项以人类可读的方式打印输出数据。 </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -L 2 -d -h /srv/</span><br></pre></td></tr></table></figure>
+
+<p>输出如下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/srv/</span><br><span class="line">└── [ 162]  volume</span><br><span class="line">    ├── [  41]  gitea</span><br><span class="line">    ├── [8.0K]  jenkins</span><br><span class="line">    ├── [  32]  mysql</span><br><span class="line">    ├── [  32]  mysql_backup</span><br><span class="line">    ├── [  20]  nacos</span><br><span class="line">    ├── [ 265]  nexus3</span><br><span class="line">    ├── [  30]  redis</span><br><span class="line">    ├── [  30]  rocketmq</span><br><span class="line">    ├── [4.0K]  rocketmq-dashboard</span><br><span class="line">    └── [  30]  x-job</span><br><span class="line"></span><br><span class="line">11 directories</span><br></pre></td></tr></table></figure>
+
+<p>从结果得知 <code>/srv</code> 目录下只有单个 <code>volume</code> 目录，分析 <code>/srv/volume</code> 目录的占用情况即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo du -h --max-depth=1 /srv/volume/</span><br></pre></td></tr></table></figure>
+
+<p>输出如下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">20G     /srv/volume/mysql</span><br><span class="line">141G    /srv/volume/nexus3</span><br><span class="line">4.0G    /srv/volume/jenkins</span><br><span class="line">96K     /srv/volume/redis</span><br><span class="line">535M    /srv/volume/gitea</span><br><span class="line">908M    /srv/volume/rocketmq</span><br><span class="line">0       /srv/volume/nacos</span><br><span class="line">3.1M    /srv/volume/rocketmq-dashboard</span><br><span class="line">487M    /srv/volume/x-job</span><br><span class="line">18G     /srv/volume/mysql_backup</span><br><span class="line">184G    /srv/volume/</span><br></pre></td></tr></table></figure>
+
+<p>几番折腾，最终发现了一个无用 Mysql 备份目录的 <code>/srv/volume/mysql_backup</code> 占用 <code>18G</code>；虽然 Nexus 的 Docker 容器卷目录 <code>/srv/volume/nexus3</code> 占用 <code>141G</code>，但属于正常使用。</p>
+<p>此处只删除 <code>/srv/volume/mysql_backup</code> 即可。</p>
+<p><code>/var</code> 目录分析同理，不再赘述。</p>
+<h2 id="确认文件未被占用"><a href="#确认文件未被占用" class="headerlink" title="确认文件未被占用"></a>确认文件未被占用</h2><p>删除文件是个人都会使用：<code>rm –rf</code> ；但是在 Linux 或者 Unix 系统中，通过 <code>rm</code> 或者文件管理器删除文件将会从文件系统的目录结构上解除链接；然而如果文件是被打开的（有一个进程正在使用），那么进程将仍然可以读取该文件，磁盘空间也一直被占用。</p>
+<p>正确的做法是删除文件后，一定要查看文件是否被进程占用，根据实际情况中止占用该文件的进程或者采用其他处理方式。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -w | grep deleted</span><br></pre></td></tr></table></figure>
+
+<p>根据输出结果中的 <code>pid</code> 来中止进程才能真正的删除文件。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/netty-learning/d01-nio/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -215,7 +336,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -522,7 +643,7 @@ end
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/e03-theory-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -550,7 +671,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -647,7 +768,7 @@ end
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/e02-pattern-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -675,7 +796,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -749,7 +870,7 @@ end
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/e01-optimize-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -777,7 +898,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -885,7 +1006,7 @@ end
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d05-shared-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -913,7 +1034,7 @@ end
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1436,7 +1557,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d04-java-thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -1464,7 +1585,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2004,7 +2125,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d03-synchronous-asynchronous/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -2032,7 +2153,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2105,7 +2226,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d02-concurrent-parallel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -2133,7 +2254,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2204,7 +2325,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
     <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d01-process-thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
       <meta itemprop="description" content="">
     </span>
@@ -2232,7 +2353,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 10:16:55" itemprop="dateModified" datetime="2022-03-08T10:16:55+08:00">2022-03-08</time>
+      <time title="修改时间：2022-05-07 15:26:19" itemprop="dateModified" datetime="2022-05-07T15:26:19+08:00">2022-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">

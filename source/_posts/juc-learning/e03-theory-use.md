@@ -2,7 +2,7 @@
 title: "并发实战（三）原理与应用"
 date: 2021-07-29T15:14:31+08:00
 lastmod: 2021-07-29T15:14:31+08:00
-categories: ["并发编程"]
+categories: ["JUC"]
 ---
 
 ## Monitor 原理

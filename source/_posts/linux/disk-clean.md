@@ -2,7 +2,7 @@
 title: "Linux 磁盘清理"
 date: 2022-05-07T14:10:25+08:00
 lastmod: 2022-05-07T14:10:25+08:00
-categories: ["系统运维"]
+categories: ["Linux"]
 ---
 
 ## 查看系统磁盘信息

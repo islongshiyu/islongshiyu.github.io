@@ -2,7 +2,7 @@
 title: "并发编程（二）进程与线程"
 date: 2020-03-22T17:22:34+08:00
 lastmod: 2020-03-22T19:35:29+08:00
-categories: ["并发编程"]
+categories: ["JUC"]
 ---
 
 Erlang 之父  Joe Armstrong 用一张5岁小孩都能看懂的图解释了并发与并行的区别：

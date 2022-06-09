@@ -360,6 +360,6 @@ hexo deploy
 
 ![certificate_active.png](blogging-with-github-pages-hexo/certificate_active.png)
 
-大约 30 - 60 分钟生效，当证书生效后可以开启强制使用 `https` 使用 `http` 访问将跳转至 `https` 。
+大约 30 - 60 分钟生效，当证书生效后可以开启强制使用 `https` ；使用 `http` 访问将跳转至 `https` 。
 
 ![enforce.png](blogging-with-github-pages-hexo/enforce.png)

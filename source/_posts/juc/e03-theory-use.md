@@ -5,6 +5,10 @@ lastmod: 2021-07-29T15:14:31+08:00
 categories: ["JUC"]
 ---
 
+并发实战之底层原理和应用案例。
+
+<!--more-->
+
 ## Monitor 原理
 
 Monitor 被翻译为**监视器**或**管程**，每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的 Mark Word 中就被设置指向 Monitor 对象的指针，Monitor 结构如下：

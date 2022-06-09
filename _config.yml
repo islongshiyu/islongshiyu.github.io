@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: '温故而知新'
-subtitle: 'Consider the past you shall know the future'
-description: 
+title: '拾予'
+subtitle: "Shiyu's Blog"
+description: '少无适俗韵，性本爱丘山'
 keywords:
 author: 'Long Shiyu'
 language: zh-CN
@@ -54,6 +54,8 @@ highlight:
   tab_replace: ''
   wrap: true
   hljs: false
+  exclude_languages:
+    - mermaid
 prismjs:
   enable: false
   preprocess: true

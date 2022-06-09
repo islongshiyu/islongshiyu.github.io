@@ -5,16 +5,9 @@ lastmod: 2021-07-26T16:19:12+08:00
 categories: ["JUC"]
 ---
 
-本文包含以下内容：
+多线程共享问题、synchronized、线程安全分析、管程Monitor、wait/notify、线程状态转换、活跃性、Lock等知识点。
 
-- 共享问题
-- synchronized
-- 线程安全分析
-- 管程Monitor
-- wait/notify
-- 线程状态转换
-- 活跃性
-- Lock
+<!--more-->
 
 ## 共享造成的问题
 
@@ -118,7 +111,8 @@ public class ThreadSharedProblem {
 
 如果是单线程以上 8 行代码是顺序执行（不会交错）没有问题：
 
-{% mermaid sequenceDiagram %}
+```mermaid
+sequenceDiagram
 autonumber
 participant t1 as 线程1
 participant m as 主内存 static i
@@ -130,13 +124,14 @@ m ->> t1:getstatic i 读取 1
 t1 ->> t1:iconst_1 准备常数 1
 t1 ->> t1:isub减法 线程内 i = 0
 t1 ->> m:putstatic i 写入 0
-{% endmermaid %}
+```
 
 但多线程下这 8 行代码可能交错运行：
 
 出现负数的情况：
 
-{% mermaid sequenceDiagram %}
+```mermaid
+sequenceDiagram
 autonumber
 participant t1 as 线程1
 participant t2 as 线程2
@@ -151,11 +146,12 @@ t1 ->> t1:iadd 加法 线程内 i =1
 t1 ->> m:putstatic i 写入 1
 t1 -->> t2:线程上下文切换
 t2 ->> m:putstatic i 写入 -1
-{% endmermaid %}
+```
 
 出现正数的情况：
 
-{% mermaid sequenceDiagram %}
+```mermaid
+sequenceDiagram
 autonumber
 participant t1 as 线程1
 participant t2 as 线程2
@@ -170,7 +166,7 @@ t2 ->> t2:isub 减法 线程内 i = -1
 t2 ->> m:putstatic i 写入 -1
 t2 -->> t1:线程上下文切换
 t1 ->> m:putstatic i 写入 1
-{% endmermaid %}
+```
 
 ### 临界区 Critical Section
 
@@ -315,31 +311,32 @@ public class ThreadSharedProblemSynchronized {
 - 这中间即使 t1 的 CPU 时间片不幸用完，被踢出了门外（不要错误理解为锁住了对象就能一直执行下去哦），这时门还是锁住的，t1 仍拿着钥匙，t2 线程还在阻塞状态进不来，只有下次轮到 t1 自己再次获得时间片时才能开门进入。
 - 当 t1 执行完 synchronized{} 块内的代码，这时候才会从 room 房间出来并解开门上的锁，唤醒 t2 线程把钥匙给他。t2 线程这时才可以进入 obj 房间，锁住了门拿上钥匙，执行它的 `count--` 代码。
 
-{% mermaid sequenceDiagram %}
-    autonumber
-	participant t1 as 线程1
-	participant t2 as 线程2
-	participant m as 主内存 static i
-	participant l as 锁对象
-	t2 ->> l:尝试获取锁
-	Note over t2,l: 拥有锁
-	m ->> t2: getstatic i 读取 0
-	t2 ->> t2:iconst_1 准备常数 1
-	t2 ->> t2:isub 减法 线程内 i = -1
-	t2 -->> t1:线程上下文切换
-	t1 -x l:尝试获取锁，被阻塞（BLOCKED）
-	t1 -->> t2:线程上下文切换
-	t2 ->> m:putstatic i 写入 -1
-	Note over t2,l: 拥有锁
-	t2 ->> l:释放锁，并唤醒阻塞的线程
-	Note over t1,l: 拥有锁
-	m ->> t1:getstatic i 读取 -1
-   	t1 ->> t1:iconst_1 准备常数 1
-   	t1 ->> t1:iadd 加法 线程内 i = 0
-    t1 ->> m:putstatic i 写入 0
-    Note over t1,l: 拥有锁
-    t1 ->> l:释放锁，并唤醒阻塞的线程
-{% endmermaid %}
+```mermaid
+sequenceDiagram
+autonumber
+participant t1 as 线程1
+participant t2 as 线程2
+participant m as 主内存 static i
+participant l as 锁对象
+t2 ->> l:尝试获取锁
+Note over t2,l: 拥有锁
+m ->> t2: getstatic i 读取 0
+t2 ->> t2:iconst_1 准备常数 1
+t2 ->> t2:isub 减法 线程内 i = -1
+t2 -->> t1:线程上下文切换
+t1 -x l:尝试获取锁，被阻塞（BLOCKED）
+t1 -->> t2:线程上下文切换
+t2 ->> m:putstatic i 写入 -1
+Note over t2,l: 拥有锁
+t2 ->> l:释放锁，并唤醒阻塞的线程
+Note over t1,l: 拥有锁
+m ->> t1:getstatic i 读取 -1
+t1 ->> t1:iconst_1 准备常数 1
+t1 ->> t1:iadd 加法 线程内 i = 0
+t1 ->> m:putstatic i 写入 0
+Note over t1,l: 拥有锁
+t1 ->> l:释放锁，并唤醒阻塞的线程
+```
 
 ### synchronized 作用范围思考
 
@@ -1396,16 +1393,17 @@ public class HashtableSafeAnalyse2 {
 
 可能的不安全执行流程如下：
 
-{% mermaid sequenceDiagram %}
-    autonumber
-	participant t1 as 线程1
-	participant t2 as 线程2
-	participant t as table
-	t ->> t1: get("key") == null
-	t ->> t2: get("key") == null
-	t2 ->> t: put("key", "value") 
-	t1 ->> t: put("key", "value")
-{% endmermaid %}
+```mermaid
+sequenceDiagram
+autonumber
+participant t1 as 线程1
+participant t2 as 线程2
+participant t as table
+t ->> t1: get("key") == null
+t ->> t2: get("key") == null
+t2 ->> t: put("key", "value") 
+t1 ->> t: put("key", "value")
+```
 
 
 这样会导致后执行完 `put` 的线程覆盖掉先执行完 `put` 的线程的值，要想保证安全性需要对 `get` 和 `put` 的组合调用再包裹一层 `sychronized` 或使用 `putIfAbsent` 方法。

@@ -5,9 +5,9 @@ lastmod: 2021-08-17T11:14:25+08:00
 categories: ["Netty"]
 ---
 
-<!--more-->
-
 `java.nio` 全称 Java non-blocking IO（实际上是 New IO），是指 JDK 1.4 及以上版本里提供的新 API（New IO） ，为所有的原始类型（ `boolean` 类型除外）提供缓存支持的数据容器，使用它可以提供非阻塞式的高伸缩性网络。
+
+<!--more-->
 
 ## 三大组件
 
@@ -32,24 +32,25 @@ categories: ["Netty"]
 
 `Channel` 有一点类似于 `Stream`，它就是读写数据的**双向通道**，可以从 `Channel` 将数据读入 `Buffer`，也可以将 `Buffer` 的数据写入 `Channel`，而之前的 `Stream` 要么是输入，要么是输出，`Channel` 比 `Stream` 更为底层。
 
-{% mermaid graph LR %}
+```mermaid
+graph LR
 Channel --> Buffer
 Buffer --> Channel
-{% endmermaid %}
-
+```
 ### Selector
 
 `Selector` 单从字面意思不好理解，需要结合服务器的设计演化来理解它的用途。
 
 #### 多线程服务器设计
 
-{% mermaid graph TD %}
+```mermaid
+graph TD
 subgraph 多线程服务器设计
 t1(thread) --> s1(socket1)
 t2(thread) --> s2(socket2)
 t3(thread) --> s3(socket3)
 end
-{% endmermaid %}
+```
 
 存在以下缺点：
 
@@ -59,14 +60,15 @@ end
 
 #### 线程池服务器设计
 
-{% mermaid graph TD %}
+```mermaid
+graph TD
 subgraph 线程池服务器设计
 t4(thread) --> s4(socket1)
 t5(thread) --> s5(socket2)
 t4(thread) -.-> s6(socket3)
 t5(thread) -.-> s7(socket4)
 end
-{% endmermaid %}
+```
 
 存在以下缺点：
 
@@ -75,14 +77,15 @@ end
 
 #### Selector 服务器设计
 
-{% mermaid graph TD %}
+```mermaid
+graph TD
 subgraph Selector 服务器设计
 thread --> selector
 selector --> c1(channel)
 selector --> c2(channel)
 selector --> c3(channel)
 end
-{% endmermaid %}
+```
 
 `Selector` 的作用就是配合一个线程来管理多个 `Channel`，获取这些 `Channel` 上发生的事件，这些 `Channel` 工作在非阻塞模式下，不会让线程吊死在一个 `Channel` 上。**适合连接数特别多，但流量低的场景（low traffic）**。
 

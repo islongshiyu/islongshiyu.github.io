@@ -19,39 +19,39 @@
 <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lsy.cool","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="本文包含以下内容：  共享问题 synchronized 线程安全分析 管程Monitor wait&#x2F;notify 线程状态转换 活跃性 Lock  共享造成的问题共享小故事 小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。    小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。 但小宋不能一天24小时使用算盘，他经常要小憩">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lsy.cool","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="多线程共享问题、synchronized、线程安全分析、管程Monitor、wait&#x2F;notify、线程状态转换、活跃性、Lock等知识点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发编程（五）模型之共享">
-<meta property="og:url" content="https://lsy.cool/juc-learning/d05-shared-model/index.html">
-<meta property="og:site_name" content="温故而知新">
-<meta property="og:description" content="本文包含以下内容：  共享问题 synchronized 线程安全分析 管程Monitor wait&#x2F;notify 线程状态转换 活跃性 Lock  共享造成的问题共享小故事 小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。    小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。 但小宋不能一天24小时使用算盘，他经常要小憩">
+<meta property="og:url" content="https://lsy.cool/juc/d05-shared-model/index.html">
+<meta property="og:site_name" content="拾予">
+<meta property="og:description" content="多线程共享问题、synchronized、线程安全分析、管程Monitor、wait&#x2F;notify、线程状态转换、活跃性、Lock等知识点。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-1.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-2.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-3.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-4.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-pro-mem.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-pro-sychronized.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/member-variable-safe-analyse.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/local-variable-safe-analyse1.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/local-variable-safe-analyse2.png">
-<meta property="og:image" content="https://lsy.cool/juc-learning/d05-shared-model/object-mem-size.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/shared-story-1.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/shared-story-2.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/shared-story-3.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/shared-story-4.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/shared-pro-mem.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/shared-pro-sychronized.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/member-variable-safe-analyse.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/local-variable-safe-analyse1.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/local-variable-safe-analyse2.png">
+<meta property="og:image" content="https://lsy.cool/juc/d05-shared-model/object-mem-size.png">
 <meta property="article:published_time" content="2021-07-26T00:19:12.000Z">
-<meta property="article:modified_time" content="2022-05-25T03:30:10.455Z">
+<meta property="article:modified_time" content="2022-06-09T07:14:40.038Z">
 <meta property="article:author" content="Long Shiyu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lsy.cool/juc-learning/d05-shared-model/shared-story-1.png">
+<meta name="twitter:image" content="https://lsy.cool/juc/d05-shared-model/shared-story-1.png">
 
 
-<link rel="canonical" href="https://lsy.cool/juc-learning/d05-shared-model/">
+<link rel="canonical" href="https://lsy.cool/juc/d05-shared-model/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/juc-learning/d05-shared-model/","path":"juc-learning/d05-shared-model/","title":"并发编程（五）模型之共享"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/juc/d05-shared-model/","path":"juc/d05-shared-model/","title":"并发编程（五）模型之共享"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>并发编程（五）模型之共享 | 温故而知新</title>
+<title>并发编程（五）模型之共享 | 拾予</title>
   
 
 
@@ -80,10 +80,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">温故而知新</p>
+      <p class="site-title">拾予</p>
       <i class="logo-line"></i>
     </a>
-      <p class="site-subtitle" itemprop="description">Consider the past you shall know the future</p>
+      <p class="site-subtitle" itemprop="description">Shiyu's Blog</p>
   </div>
 
   <div class="site-nav-right">
@@ -98,8 +98,8 @@
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a></li>
         <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
   </ul>
 </nav>
@@ -140,30 +140,33 @@
     <img class="site-author-image" itemprop="image" alt="Long Shiyu"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">Long Shiyu</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">少无适俗韵，性本爱丘山</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/islongshiyu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;islongshiyu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/islongshiyu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;islongshiyu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:islongshiyu@gmail.com" title="E-Mail → mailto:islongshiyu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:islongshiyu@gmail.com" title="E-Mail → mailto:islongshiyu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -201,16 +204,16 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc-learning/d05-shared-model/">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/juc/d05-shared-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Long Shiyu">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="少无适俗韵，性本爱丘山">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="温故而知新">
+      <meta itemprop="name" content="拾予">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -232,7 +235,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-25 11:30:10" itemprop="dateModified" datetime="2022-05-25T11:30:10+08:00">2022-05-25</time>
+      <time title="修改时间：2022-06-09 15:14:40" itemprop="dateModified" datetime="2022-06-09T15:14:40+08:00">2022-06-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -254,26 +257,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本文包含以下内容：</p>
-<ul>
-<li>共享问题</li>
-<li>synchronized</li>
-<li>线程安全分析</li>
-<li>管程Monitor</li>
-<li>wait/notify</li>
-<li>线程状态转换</li>
-<li>活跃性</li>
-<li>Lock</li>
-</ul>
+        <p>多线程共享问题、synchronized、线程安全分析、管程Monitor、wait/notify、线程状态转换、活跃性、Lock等知识点。</p>
+<span id="more"></span>
+
 <h2 id="共享造成的问题"><a href="#共享造成的问题" class="headerlink" title="共享造成的问题"></a>共享造成的问题</h2><h3 id="共享小故事"><a href="#共享小故事" class="headerlink" title="共享小故事"></a>共享小故事</h3><ul>
 <li>小龙老师（操作系统）有一个功能强大的算盘（CPU），现在想把它租出去，赚一点外快。</li>
 </ul>
-<p><img src="/juc-learning/d05-shared-model/shared-story-1.png"></p>
+<p><img src="/juc/d05-shared-model/shared-story-1.png"></p>
 <ul>
 <li>小宋同学、小付同学（线程）来使用这个算盘来进行一些计算，并按照时间给老小龙老师支付费用。</li>
 <li>但小宋不能一天24小时使用算盘，他经常要小憩一会（sleep），又或是去吃饭上厕所（阻塞 IO 操作），有时还需要一根烟，没烟时思路全无（wait），这些情况统称为（阻塞）。</li>
 </ul>
-<p><img src="/juc-learning/d05-shared-model/shared-story-2.png"></p>
+<p><img src="/juc/d05-shared-model/shared-story-2.png"></p>
 <ul>
 <li>在这些时候，算盘没利用起来（不能收钱了），小龙觉得有点不划算。</li>
 <li>另外，小付也想用用算盘，如果总是小宋占着算盘，让小付觉得不公平。</li>
@@ -282,14 +277,14 @@
 <li>最近执行的计算比较复杂，需要存储一些中间结果，而学生们的脑容量（工作内存）不够，所以小龙申请了一个笔记本（主存），把一些中间结果先记在笔记本上。</li>
 <li>计算流程是这样的：</li>
 </ul>
-<p><img src="/juc-learning/d05-shared-model/shared-story-3.png"></p>
+<p><img src="/juc/d05-shared-model/shared-story-3.png"></p>
 <ul>
 <li>但是由于分时系统，有一天还是发生了事故。</li>
 <li>小宋刚读取了初始值 0 做了个 +1 运算，还没来得及写回结果。</li>
 <li>小龙老师说 ：“小宋，你的时间到了，该别人了，记住结果走吧 ”，于是小宋念叨着 ：“结果是1，结果是1…”， 不甘心地到一边待着去了（上下文切换）。</li>
 <li>小龙老师说 ：“ 小付，该你了 ”，小付看到了笔记本上还写着 0 做了一个 -1 运算，将结果 -1 写入笔记本。</li>
 </ul>
-<p><img src="/juc-learning/d05-shared-model/shared-story-4.png"></p>
+<p><img src="/juc/d05-shared-model/shared-story-4.png"></p>
 <ul>
 <li>这时小付的时间也用完了，小龙老师又叫醒了小宋：“小宋，把你上次的题目算完吧”，小宋将他脑海中的结果 1 写入了笔记本。</li>
 <li>小宋和小付都觉得自己没做错，但笔记本里的结果是 1 而不是 0。</li>
@@ -306,61 +301,55 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> 9 getstatic #14 &lt;d05/ThreadSharedProblem.count : I&gt;</span><br><span class="line">12 iconst_1</span><br><span class="line">13 isub</span><br><span class="line">14 putstatic #14 &lt;d05/ThreadSharedProblem.count : I&gt;</span><br></pre></td></tr></table></figure>
 
 <p>一行代码实际上对应的是4条 JVM 指令，而 Java 的内存模型如下，完成静态变量的自增，自减需要在主存和工作内存中进行数据交换：</p>
-<p><img src="/juc-learning/d05-shared-model/shared-pro-mem.png"></p>
+<p><img src="/juc/d05-shared-model/shared-pro-mem.png"></p>
 <p>如果是单线程以上 8 行代码是顺序执行（不会交错）没有问题：</p>
-<pre class="mermaid">
-sequenceDiagram
+<pre class="mermaid">sequenceDiagram
 autonumber
 participant t1 as 线程1
 participant m as 主内存 static i
-m -&gt;&gt; t1: getstatic i 读取 0
-t1 -&gt;&gt; t1:iconst_1 准备常数 1
-t1 -&gt;&gt; t1:iadd 加法 线程内 i &#x3D;1
-t1 -&gt;&gt; m:putstatic i 写入 1
-m -&gt;&gt; t1:getstatic i 读取 1
-t1 -&gt;&gt; t1:iconst_1 准备常数 1
-t1 -&gt;&gt; t1:isub减法 线程内 i &#x3D; 0
-t1 -&gt;&gt; m:putstatic i 写入 0
-</pre>
+m ->> t1: getstatic i 读取 0
+t1 ->> t1:iconst_1 准备常数 1
+t1 ->> t1:iadd 加法 线程内 i =1
+t1 ->> m:putstatic i 写入 1
+m ->> t1:getstatic i 读取 1
+t1 ->> t1:iconst_1 准备常数 1
+t1 ->> t1:isub减法 线程内 i = 0
+t1 ->> m:putstatic i 写入 0</pre>
 
 <p>但多线程下这 8 行代码可能交错运行：</p>
 <p>出现负数的情况：</p>
-<pre class="mermaid">
-sequenceDiagram
+<pre class="mermaid">sequenceDiagram
 autonumber
 participant t1 as 线程1
 participant t2 as 线程2
 participant m as 主内存 static i
-m -&gt;&gt; t2:getstatic i 读取 0
-t2 -&gt;&gt; t2:iconst_1 准备常数 1
-t2 -&gt;&gt; t2:isub 减法 线程内 i &#x3D; -1
-t2 --&gt;&gt; t1:线程上下文切换
-m -&gt;&gt; t1:getstatic i 读取 0
-t1 -&gt;&gt; t1:iconst_1 准备常数 1
-t1 -&gt;&gt; t1:iadd 加法 线程内 i &#x3D;1
-t1 -&gt;&gt; m:putstatic i 写入 1
-t1 --&gt;&gt; t2:线程上下文切换
-t2 -&gt;&gt; m:putstatic i 写入 -1
-</pre>
+m ->> t2:getstatic i 读取 0
+t2 ->> t2:iconst_1 准备常数 1
+t2 ->> t2:isub 减法 线程内 i = -1
+t2 -->> t1:线程上下文切换
+m ->> t1:getstatic i 读取 0
+t1 ->> t1:iconst_1 准备常数 1
+t1 ->> t1:iadd 加法 线程内 i =1
+t1 ->> m:putstatic i 写入 1
+t1 -->> t2:线程上下文切换
+t2 ->> m:putstatic i 写入 -1</pre>
 
 <p>出现正数的情况：</p>
-<pre class="mermaid">
-sequenceDiagram
+<pre class="mermaid">sequenceDiagram
 autonumber
 participant t1 as 线程1
 participant t2 as 线程2
 participant m as 主内存 static i
-m -&gt;&gt; t1:getstatic i 读取 0
-t1 -&gt;&gt; t1:iconst_1 准备常数 1
-t1 -&gt;&gt; t1:iadd 加法 线程内 i &#x3D;1
-t1 --&gt;&gt; t2:线程上下文切换
-m -&gt;&gt; t2:getstatic i 读取 0
-t2 -&gt;&gt; t2:iconst_1 准备常数 1
-t2 -&gt;&gt; t2:isub 减法 线程内 i &#x3D; -1
-t2 -&gt;&gt; m:putstatic i 写入 -1
-t2 --&gt;&gt; t1:线程上下文切换
-t1 -&gt;&gt; m:putstatic i 写入 1
-</pre>
+m ->> t1:getstatic i 读取 0
+t1 ->> t1:iconst_1 准备常数 1
+t1 ->> t1:iadd 加法 线程内 i =1
+t1 -->> t2:线程上下文切换
+m ->> t2:getstatic i 读取 0
+t2 ->> t2:iconst_1 准备常数 1
+t2 ->> t2:isub 减法 线程内 i = -1
+t2 ->> m:putstatic i 写入 -1
+t2 -->> t1:线程上下文切换
+t1 ->> m:putstatic i 写入 1</pre>
 
 <h3 id="临界区-Critical-Section"><a href="#临界区-Critical-Section" class="headerlink" title="临界区 Critical Section"></a>临界区 Critical Section</h3><ul>
 <li><p>一个程序运行多个线程本身是没有问题的。</p>
@@ -397,7 +386,7 @@ t1 -&gt;&gt; m:putstatic i 写入 1
 <p>执行结果：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16:09:28.935 d05.ThreadSharedProblemSynchronized [main] - count的值为：0</span><br></pre></td></tr></table></figure>
 
-<h3 id="synchronized-理解"><a href="#synchronized-理解" class="headerlink" title="synchronized 理解"></a>synchronized 理解</h3><p><img src="/juc-learning/d05-shared-model/shared-pro-sychronized.png"></p>
+<h3 id="synchronized-理解"><a href="#synchronized-理解" class="headerlink" title="synchronized 理解"></a>synchronized 理解</h3><p><img src="/juc/d05-shared-model/shared-pro-sychronized.png"></p>
 <p>可以这样理解 <code>synchronized</code> ：</p>
 <ul>
 <li><code>synchronized(对象)</code> 中的对象，可以想象为一个房间（room），有唯一入口（门）房间只能一次进入一人进行计算，线程 t1，t2 想象成两个人。</li>
@@ -406,32 +395,30 @@ t1 -&gt;&gt; m:putstatic i 写入 1
 <li>这中间即使 t1 的 CPU 时间片不幸用完，被踢出了门外（不要错误理解为锁住了对象就能一直执行下去哦），这时门还是锁住的，t1 仍拿着钥匙，t2 线程还在阻塞状态进不来，只有下次轮到 t1 自己再次获得时间片时才能开门进入。</li>
 <li>当 t1 执行完 synchronized{} 块内的代码，这时候才会从 room 房间出来并解开门上的锁，唤醒 t2 线程把钥匙给他。t2 线程这时才可以进入 obj 房间，锁住了门拿上钥匙，执行它的 <code>count--</code> 代码。</li>
 </ul>
-<pre class="mermaid">
-sequenceDiagram
-   autonumber
+<pre class="mermaid">sequenceDiagram
+autonumber
 participant t1 as 线程1
 participant t2 as 线程2
 participant m as 主内存 static i
 participant l as 锁对象
-t2 -&gt;&gt; l:尝试获取锁
+t2 ->> l:尝试获取锁
 Note over t2,l: 拥有锁
-m -&gt;&gt; t2: getstatic i 读取 0
-t2 -&gt;&gt; t2:iconst_1 准备常数 1
-t2 -&gt;&gt; t2:isub 减法 线程内 i &#x3D; -1
-t2 --&gt;&gt; t1:线程上下文切换
+m ->> t2: getstatic i 读取 0
+t2 ->> t2:iconst_1 准备常数 1
+t2 ->> t2:isub 减法 线程内 i = -1
+t2 -->> t1:线程上下文切换
 t1 -x l:尝试获取锁，被阻塞（BLOCKED）
-t1 --&gt;&gt; t2:线程上下文切换
-t2 -&gt;&gt; m:putstatic i 写入 -1
+t1 -->> t2:线程上下文切换
+t2 ->> m:putstatic i 写入 -1
 Note over t2,l: 拥有锁
-t2 -&gt;&gt; l:释放锁，并唤醒阻塞的线程
+t2 ->> l:释放锁，并唤醒阻塞的线程
 Note over t1,l: 拥有锁
-m -&gt;&gt; t1:getstatic i 读取 -1
-  	t1 -&gt;&gt; t1:iconst_1 准备常数 1
-  	t1 -&gt;&gt; t1:iadd 加法 线程内 i &#x3D; 0
-   t1 -&gt;&gt; m:putstatic i 写入 0
-   Note over t1,l: 拥有锁
-   t1 -&gt;&gt; l:释放锁，并唤醒阻塞的线程
-</pre>
+m ->> t1:getstatic i 读取 -1
+t1 ->> t1:iconst_1 准备常数 1
+t1 ->> t1:iadd 加法 线程内 i = 0
+t1 ->> m:putstatic i 写入 0
+Note over t1,l: 拥有锁
+t1 ->> l:释放锁，并唤醒阻塞的线程</pre>
 
 <h3 id="synchronized-作用范围思考"><a href="#synchronized-作用范围思考" class="headerlink" title="synchronized 作用范围思考"></a>synchronized 作用范围思考</h3><ol>
 <li><p>如果把 <code>synchronized(obj)</code> 放在 <code>for</code> 循环的外面，如何理解?</p>
@@ -553,19 +540,19 @@ m -&gt;&gt; t1:getstatic i 读取 -1
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;t0&quot; java.lang.IndexOutOfBoundsException: Index: 0, Size: 1</span><br><span class="line">	at java.util.ArrayList.rangeCheck(ArrayList.java:659)</span><br><span class="line">	at java.util.ArrayList.remove(ArrayList.java:498)</span><br><span class="line">	at d05.MObject.m3(MemberVariableSafeAnalyse.java:39)</span><br><span class="line">	at d05.MObject.m1(MemberVariableSafeAnalyse.java:30)</span><br><span class="line">	at d05.MemberVariableSafeAnalyse.lambda$main$0(MemberVariableSafeAnalyse.java:17)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br></pre></td></tr></table></figure>
 
 <p>导致这个问题的原因是，上面的代码中无论哪个线程操作的都是同一个 <code>MObject</code> 对象中的 <code>list</code> 成员变量，其内存结构如下：</p>
-<p><img src="/juc-learning/d05-shared-model/member-variable-safe-analyse.png"></p>
+<p><img src="/juc/d05-shared-model/member-variable-safe-analyse.png"></p>
 <h3 id="局部变量线程安全分析"><a href="#局部变量线程安全分析" class="headerlink" title="局部变量线程安全分析"></a>局部变量线程安全分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalVariableSafeAnalyse1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>test()</code>方法字节码指令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 iconst_0</span><br><span class="line">1 istore_0</span><br><span class="line">2 iinc 0 by 1</span><br><span class="line">5 return</span><br></pre></td></tr></table></figure>
 
-<p>该方法在多线程运行时，内存结构如图：<br><img src="/juc-learning/d05-shared-model/local-variable-safe-analyse1.png"></p>
+<p>该方法在多线程运行时，内存结构如图：<br><img src="/juc/d05-shared-model/local-variable-safe-analyse1.png"></p>
 <p><strong>每个线程中的变量</strong><code>i</code><strong>都是线程私有的，因此不存在共享，是线程安全的。</strong></p>
 <p>接下来分析局部变量引用的对象是否线程安全，对上面例子的代码稍作修改后代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalVariableSafeAnalyse2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THREADS = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LOOPS = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        LObj2 lObj2 = <span class="keyword">new</span> LObj2();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; THREADS; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                lObj2.m1(LOOPS);</span><br><span class="line">            &#125;, <span class="string">&quot;t&quot;</span> + i).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LObj2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">m1</span><span class="params">(<span class="keyword">int</span> loops)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loops; i++) &#123;</span><br><span class="line">            m2(list);</span><br><span class="line">            m3(list);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">m2</span><span class="params">(List&lt;String&gt; list)</span> </span>&#123;</span><br><span class="line">        list.add(<span class="string">&quot;1&quot;</span>);<span class="comment">// 添加字符串1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">m3</span><span class="params">(List&lt;String&gt; list)</span> </span>&#123;</span><br><span class="line">        list.remove(<span class="number">0</span>);<span class="comment">// 移除首个元素</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>其不同之处在于将成员变量 <code>list</code> 改为了局部变量，在多线程情况下，其内存结构如下：</p>
-<p><img src="/juc-learning/d05-shared-model/local-variable-safe-analyse2.png"></p>
+<p><img src="/juc/d05-shared-model/local-variable-safe-analyse2.png"></p>
 <p>分析：</p>
 <ul>
 <li><p><code>list</code> 是局部变量，每个线程调用时会创建其不同实例，没有共享</p>
@@ -615,17 +602,15 @@ m -&gt;&gt; t1:getstatic i 读取 -1
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashtableSafeAnalyse2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Hashtable&lt;String, String&gt; table = <span class="keyword">new</span> Hashtable&lt;&gt;();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (table.get(<span class="string">&quot;key&quot;</span>) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                table.put(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (table.get(<span class="string">&quot;key&quot;</span>) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                table.put(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可能的不安全执行流程如下：</p>
-<pre class="mermaid">
-sequenceDiagram
-   autonumber
+<pre class="mermaid">sequenceDiagram
+autonumber
 participant t1 as 线程1
 participant t2 as 线程2
 participant t as table
-t -&gt;&gt; t1: get(&quot;key&quot;) &#x3D;&#x3D; null
-t -&gt;&gt; t2: get(&quot;key&quot;) &#x3D;&#x3D; null
-t2 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;) 
-t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
-</pre>
+t ->> t1: get("key") == null
+t ->> t2: get("key") == null
+t2 ->> t: put("key", "value") 
+t1 ->> t: put("key", "value")</pre>
 
 
 <p>这样会导致后执行完 <code>put</code> 的线程覆盖掉先执行完 <code>put</code> 的线程的值，要想保证安全性需要对 <code>get</code> 和 <code>put</code> 的组合调用再包裹一层 <code>sychronized</code> 或使用 <code>putIfAbsent</code> 方法。</p>
@@ -717,7 +702,7 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 
 
 <p>因此一个对象占用的内存空间如下：</p>
-<p><img src="/juc-learning/d05-shared-model/object-mem-size.png"></p>
+<p><img src="/juc/d05-shared-model/object-mem-size.png"></p>
 <h3 id="Monitor-原理"><a href="#Monitor-原理" class="headerlink" title="Monitor 原理"></a>Monitor 原理</h3><p><a href="/e03-theory-use/">并发实战（三）原理与应用</a></p>
 <ul>
 <li>Monitor 原理</li>
@@ -757,12 +742,12 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/juc-learning/e01-optimize-use/" rel="prev" title="并发实战（一）优化与应用">
+                <a href="/juc/e01-optimize-use/" rel="prev" title="并发实战（一）优化与应用">
                   <i class="fa fa-chevron-left"></i> 并发实战（一）优化与应用
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/juc-learning/d04-java-thread/" rel="next" title="并发编程（四）爪哇之线程">
+                <a href="/juc/d04-java-thread/" rel="next" title="并发编程（四）爪哇之线程">
                   并发编程（四）爪哇之线程 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -797,12 +782,12 @@ t1 -&gt;&gt; t: put(&quot;key&quot;, &quot;value&quot;)
 
   
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"neutral","dark":"neutral"},"js":{"url":"https://unpkg.com/mermaid@8.13.8/dist/mermaid.min.js","integrity":"sha256-QmSAc2kIaUjleIJ46X7qPW2zrpCbXlMz3YIGgWpQ1Jo="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"forest","dark":"forest"},"js":{"url":"https://unpkg.com/mermaid@8.13.8/dist/mermaid.min.js","integrity":"sha256-QmSAc2kIaUjleIJ46X7qPW2zrpCbXlMz3YIGgWpQ1Jo="}}</script>
   <script src="/js/third-party/tags/mermaid.js"></script>
 
 

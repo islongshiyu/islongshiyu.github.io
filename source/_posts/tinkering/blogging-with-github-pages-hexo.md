@@ -336,9 +336,10 @@ hexo deploy
 访问 `https://<user>.github.io` 即可访问博客，这是 `Github` 提供的默认的子域名；若需要绑定自有域名按照如下步骤进行配置即可：
 
 1. 购买一个自己喜欢的个性域名：各大云平台（如：阿里云，腾讯云等）都有域名购买托管服务，我使用的是阿里云。
-2. 配置自定义域名。
+2. 在本地站点根目录下的 `source` 目录下添加 `CNAME` 文件（*该目录下的文件编译后将编译到站点的根目录下*），内容为你的自有个性域名（**如果更换了域名需要更改这个文件的内容**）。
+3. 配置自定义域名。
     ![custom-domain.png](blogging-with-github-pages-hexo/custom-domain.png)
-3. 域名解析配置（我使用的时阿里云的域名解析，其他平台的也差不多）。
+4. 域名解析配置（我使用的时阿里云的域名解析，其他平台的也差不多）。
     ![dns.png](blogging-with-github-pages-hexo/dns.png)
     说明：
     + 主机记录为 `www` 记录类型为 `CNAME` 的解析是**自有 `www` 子域名**和 `Github Pages` 子域名 `<user>.github.io` 的映射，生效后将可以通过 `www.<你的根域名>`（`www` 可以更换为你喜欢的字符串，比如：`blog`、`tech`） 访问博客网站。

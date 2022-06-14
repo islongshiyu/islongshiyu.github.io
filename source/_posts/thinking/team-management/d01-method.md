@@ -6,11 +6,11 @@ tags: ["Team Management"]
 categories: ["Thinking"]
 ---
 
-## 认知过程
-
 本文介绍如何辅导团队管理员工/下属的方法，在交流辅导方法之前，先聊一聊人的学习认知过程。因为只有了解人是怎么学习认知的，我们才能更好的去实施这个事情，达到更好的一个效果。
 
 <!--more-->
+
+## 认知过程
 
 ![taxonomy-of-educational-objectives.png](d01-method/taxonomy-of-educational-objectives.png)
 

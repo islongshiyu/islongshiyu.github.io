@@ -59,4 +59,4 @@ public class AsynchronousReadFile {
 
 ## 应用
 
-[使用多线程充分利用处理器](../e01-optimize-use/#使用多线程充分利用处理器)
+[使用多线程充分利用处理器](./e01-optimize-use/#使用多线程充分利用处理器)

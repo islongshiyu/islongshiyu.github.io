@@ -1911,12 +1911,12 @@ public synchronized void transfer(Account target, int amount) {
 
 ### Monitor 原理
 
-[并发实战（三）原理与应用](/e03-theory-use/)
+[并发实战（三）原理与应用](./e03-theory-use/)
 
 + Monitor 原理
 
 ### sychronized 原理
 
-[并发实战（三）原理与应用](/e03-theory-use/)
+[并发实战（三）原理与应用](./e03-theory-use/)
 
 + sychronized 原理

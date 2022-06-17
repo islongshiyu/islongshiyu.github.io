@@ -1,8 +1,8 @@
 ---
 title: "团队管理（三）架构"
-date: 2022-06-15T17:48:00+08:00
-lastmod: 2022-06-15T16:53:00+08:00
-tags: ["Team Management"]
+date: 2022-06-14T17:48:00+08:00
+lastmod: 2022-06-14T16:53:00+08:00
+tags: ["团队管理"]
 categories: ["Thinking"]
 ---
 

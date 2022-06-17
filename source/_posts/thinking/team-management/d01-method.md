@@ -1,7 +1,7 @@
 ---
 title: "团队管理（一）方法"
-date: 2022-06-14T11:10:00+08:00
-lastmod: 2022-06-14T15:10:00+08:00
+date: 2022-06-13T11:10:00+08:00
+lastmod: 2022-06-13T15:10:00+08:00
 tags: ["Team Management"]
 categories: ["Thinking"]
 ---

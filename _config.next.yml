@@ -818,9 +818,8 @@ mermaid:
   enable: true
   # Available themes: default | dark | forest | neutral
   theme:
-    light: forest
-    dark: forest
-
+    light: neutral
+    dark: neutral
 
 # ---------------------------------------------------------------
 # Animation Settings

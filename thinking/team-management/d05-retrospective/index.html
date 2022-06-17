@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lsy.cool","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="无论是对于企业还是个人来说，复盘都是一个能使其快速成长的方法，它的目的在于快速找到问题，总结经验的同时，找到工作的突破点，发现可以完善的方向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="团队管理（五）复盘">
+<meta property="og:url" content="https://lsy.cool/thinking/team-management/d05-retrospective/index.html">
+<meta property="og:site_name" content="拾予">
+<meta property="og:description" content="无论是对于企业还是个人来说，复盘都是一个能使其快速成长的方法，它的目的在于快速找到问题，总结经验的同时，找到工作的突破点，发现可以完善的方向。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lsy.cool/thinking/team-management/d05-retrospective/fishbone-diagram.png">
+<meta property="article:published_time" content="2022-06-15T19:10:00.000Z">
+<meta property="article:modified_time" content="2022-06-17T08:03:03.114Z">
+<meta property="article:author" content="Long Shiyu">
+<meta property="article:tag" content="团队管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lsy.cool/thinking/team-management/d05-retrospective/fishbone-diagram.png">
+
+
+<link rel="canonical" href="https://lsy.cool/thinking/team-management/d05-retrospective/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lsy.cool/thinking/team-management/d05-retrospective/","path":"thinking/team-management/d05-retrospective/","title":"团队管理（五）复盘"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>团队管理（五）复盘 | 拾予</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">拾予</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Shiyu's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">18</span></a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GRAI%E5%A4%8D%E7%9B%98%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">GRAI复盘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E7%9B%98%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">复盘步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E7%9B%98%E7%AD%B9%E5%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">复盘筹备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E7%9B%AE%E6%A0%87"><span class="nav-number">2.2.</span> <span class="nav-text">回顾目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E7%BB%93%E6%9E%9C"><span class="nav-number">2.3.</span> <span class="nav-text">评估结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.4.</span> <span class="nav-text">分析原因</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%B1%BC%E9%AA%A8%E5%9B%BE"><span class="nav-number">2.4.1.</span> <span class="nav-text">鱼骨图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%9E%E8%B7%AF%E5%9B%BE"><span class="nav-number">2.4.2.</span> <span class="nav-text">因果回路图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E8%A7%84%E5%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text">总结规律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E7%9B%98%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.6.</span> <span class="nav-text">复盘模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E7%9B%98%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">复盘原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E7%9B%98%E9%A2%91%E7%8E%87"><span class="nav-number">4.</span> <span class="nav-text">复盘频率</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Long Shiyu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Long Shiyu</p>
+  <div class="site-description" itemprop="description">少无适俗韵，性本爱丘山</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/islongshiyu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;islongshiyu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:islongshiyu@gmail.com" title="E-Mail → mailto:islongshiyu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/islongshiyu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lsy.cool/thinking/team-management/d05-retrospective/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Long Shiyu">
+      <meta itemprop="description" content="少无适俗韵，性本爱丘山">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾予">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          团队管理（五）复盘
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-16 03:10:00" itemprop="dateCreated datePublished" datetime="2022-06-16T03:10:00+08:00">2022-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-17 16:03:03" itemprop="dateModified" datetime="2022-06-17T16:03:03+08:00">2022-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Thinking/" itemprop="url" rel="index"><span itemprop="name">Thinking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>无论是对于企业还是个人来说，复盘都是一个能使其快速成长的方法，它的目的在于快速找到问题，总结经验的同时，找到工作的突破点，发现可以完善的方向。</p>
+<span id="more"></span>
+
+<p>做过的事情，再从头过一遍，目的是不断检验和校正目标，不断分析过程中的得失，便于改进，不断深化认识和总结规律。</p>
+<h2 id="GRAI复盘法"><a href="#GRAI复盘法" class="headerlink" title="GRAI复盘法"></a>GRAI复盘法</h2><p>我们可以采用“GRAI”复盘法，这个方法共有四个步骤：</p>
+<ol>
+<li><code>Goal</code>（目标回顾）：当初的目的或期望是什么。</li>
+<li><code>Result</code>（结果陈述）：对照原来的目标，看完成情况如何。</li>
+<li><code>Analysis</code>（过程分析）：分析事情成功或失败的关键原因。</li>
+<li><code>Insight</code>（归类总结）：得失体会，经验是否可复用，下一步的执行计划。</li>
+</ol>
+<pre class="mermaid">flowchart LR
+    A0((GRAI复盘法))
+        B1((Goal目标回顾))
+            B1C1(回顾当时的情景并列出当时设立的目标)
+        B2((Result结果对比))
+            B2C1(列出目标完成情况,将结果与目标进行比较,共有这几种情况:达到\超越\不足\新增或更改目标\放弃)
+        B3((Analysis过程分析))
+            B3C1(1.叙述执行过程:尽可能客观\详细的回溯每一个步骤和细节)
+            B3C2(2.自我剖析很关键:用今天的眼光和能力审视昨天的做法,学到对未来有用的信息)
+                B3C2D1(成功或者失败的原因是什么,可以从主观/客观,内部和外部的角度分析)
+                B3C2D2(和往期结果对比,和同行业结果对比,研究差异的原因)
+                B3C2D3(分别列出可控/半可控/不可控的因素,并分析有没有可能提高可控性)
+            B3C3(3.众人设问)
+                B3C3D1(从不同的角度向自我提问,当时为什么要这么做?)
+                B3C3D2(有哪些基本前提和假设?)
+                B3C3D3(借此追溯自己做事的动机,同时思考其他可能性?)
+        B4((Insight总结规律))
+            B4C1(总结出可适用于类似情况的经典套路并以此来提炼出规律)
+            B4C2(如果可以的话尝试用其他案例佐证一下)
+
+    A0 --> B1 & B2 & B3 & B4
+        B1 --> B1C1 
+        B2 --> B2C1
+        B3 --> B3C1 & B3C2 & B3C3
+            B3C2 --> B3C2D1 & B3C2D2 & B3C2D3
+            B3C3 --> B3C3D1 & B3C3D2 & B3C3D3
+        B4 --> B4C1 & B4C2</pre>
+
+<h2 id="复盘步骤"><a href="#复盘步骤" class="headerlink" title="复盘步骤"></a>复盘步骤</h2><h3 id="复盘筹备"><a href="#复盘筹备" class="headerlink" title="复盘筹备"></a>复盘筹备</h3><p>确定是否开展复盘及参与人员：</p>
+<ol>
+<li>根据业务或项目的发展情况，确定是否召开复盘会，召开何种形式的复盘会。</li>
+<li>收集整理业务，项目相关资料。</li>
+<li>拟定参会人员，确定复盘议题，发起参会通知。</li>
+</ol>
+<h3 id="回顾目标"><a href="#回顾目标" class="headerlink" title="回顾目标"></a>回顾目标</h3><p>当初的目的或期望是什么：</p>
+<ol>
+<li>分清目的和目标的不同，目的是为什么（<code>Why</code>）要做这个事情，目标是要做成什么样（<code>What</code>）的结果。</li>
+<li>除了确定目的之外，最好能够确定出可量化（采用<a target="_blank" rel="noopener" href="https://wiki.mbalib.com/wiki/SMART%E5%8E%9F%E5%88%99">SMART原则</a>原则进行分析）的目标或者里程碑，无量化或不可考核的目标，很难保证目的的实现，也很难与结果进行对比评估。</li>
+<li>团队目标需要进一步拆解到个人，这个过程可以使用WBS工作拆解方法进一步分解任务，尽可能保证每个人目标是合理的，目标本身要是不合理的话，复盘得出的结论也很难有说服力，如果不合理就需要分析当初制定这个目标的原因，是哪里出了问题，之后需要进行注意。</li>
+</ol>
+<h3 id="评估结果"><a href="#评估结果" class="headerlink" title="评估结果"></a>评估结果</h3><p>对照原来的目标，看完成情况如何：</p>
+<ol>
+<li>设定好“实事求是”的复盘氛围，比较结果与目标的差距处，找出成功处（亮点）和可提升处（不足），就是“定义问题”，以便迚入复盘的第三步骤——“分析原因”。</li>
+<li>清晰地将“目标”和“结果”之间的差异描述出来，这里先不管出现问题的原因以及解决方案，更不应是指责、抱怨和撇清责任等。</li>
+<li>亮点与不足同样重要，不能弱化亮点，过分谦虚要不得，忽略真本事更遗憾。</li>
+<li>数据数据、工作的结果数据，和原定目标相比有哪些亮点和不足，目标完成的怎样，对这样的结果是否满意，要把结果好坏，满意度等方面，都用数据表达出来。</li>
+</ol>
+<h3 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h3><p>分析事情成功或失败的关键原因：</p>
+<ol>
+<li>事情成功和失败的根本原因，包括主观和客观两方面。</li>
+<li>分析成功因素时，多列举客观。</li>
+<li>分析失败原因时，多找主观原因。</li>
+<li>有时候原因的构成是很复杂的，需要我们进行层层剖析。这时候，我们可以通过画鱼骨图、或者采用<a target="_blank" rel="noopener" href="https://wiki.mbalib.com/wiki/5W1H%E5%88%86%E6%9E%90%E6%B3%95">5W1H分析法</a>、或者采用因果回路图进行分析。</li>
+</ol>
+<h4 id="鱼骨图"><a href="#鱼骨图" class="headerlink" title="鱼骨图"></a>鱼骨图</h4><p><a target="_blank" rel="noopener" href="https://wiki.mbalib.com/wiki/%E9%B1%BC%E9%AA%A8%E5%9B%BE">鱼骨图</a>是一种非定量分析工具，可以帮助我们对问题的原因进行归类、逻辑化、条理化。鱼骨图的框架如图：</p>
+<p><img src="/thinking/team-management/d05-retrospective/fishbone-diagram.png" alt="fishbone-diagram.png"></p>
+<p>绘制鱼骨图的基本程序包括：</p>
+<ol>
+<li>定义主要问题（“鱼头”）；</li>
+<li>讨论确定主要的影响因素类别或框架（“骨架”）；</li>
+<li>采用头脑风暴法或团体列名法，依次对各主要原因进行细化（“鱼刺”）；</li>
+<li>修改和优化。</li>
+</ol>
+<h4 id="因果回路图"><a href="#因果回路图" class="headerlink" title="因果回路图"></a>因果回路图</h4><p>也被称为“系统循环图”（Casual Loop Diagram），是用因果关系链的形式来描述系统的结构、表述系统的动态关联，倡导动态或环型思考，让人们看清影响系统行为的一些关键要素及其之间的相互连接，有助于把握关键、应对变化。绘制流程：</p>
+<pre class="mermaid">flowchart LR
+    A((找问题))
+    B((找原因))
+    C((找结果<br>))
+    D((找回路<br>))
+    X((End))
+
+    A --找出实际问题作为分析对象--> B --找出产生这个问题的各种原因--> C --找出这个问题可能产生的各种结果--> D --思考在因果之间是否存在着相互影响的回路--> X</pre>
+
+
+<p>以下为一个系统循环图：</p>
+<pre class="mermaid">flowchart LR
+    A((服务质量))
+    B((管理SKU的数量和种类))
+    C((工作量))
+    D((处理能力))
+    E((管理复杂度))
+    F((有效员工能力))
+    G((错误发生频率))
+    H((培训))
+    I((员工人数))
+    J((成本))
+    K((有效的VMS))
+    
+    B --s--> C --s--> D  --s--> G --s--> J --s-->  F --s-->  D --s--> A
+    I --s--> F & J
+    K -.0.-> C
+    K --s--> J
+    H --s--> F & J
+    G --s--> E --s--> C</pre>
+
+
+<h3 id="总结规律"><a href="#总结规律" class="headerlink" title="总结规律"></a>总结规律</h3><p>得失体会，经验是否有规律性，可复用，下一步的执行计划。</p>
+<ol>
+<li>总结规律需要看的长远，寻求更广泛的规律，可复用性，不要局限于当前事件。</li>
+<li>总结经验要谨慎，不能把一时一地的认知当成规律，找到事物更有效、更符合本质的做法，比如需要实施哪些新举措，需要继续哪些措施等。</li>
+<li>把分析所得总结出来，并提炼成为规律分享出去，成为自己和团队以后工作的一个参考和经验。</li>
+</ol>
+<h3 id="复盘模板"><a href="#复盘模板" class="headerlink" title="复盘模板"></a>复盘模板</h3><p>通过以上几个步骤，基本能够将相关内容按照模板填写完成：</p>
+<table>
+<thead>
+<tr>
+<th align="left">某某项目复盘</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">项目时间：</td>
+<td align="left">参与人员：</td>
+</tr>
+<tr>
+<td align="left">复盘日期：</td>
+<td align="left">复盘人员：</td>
+</tr>
+<tr>
+<td align="left"><strong>回顾目标</strong></td>
+<td align="left"><strong>评估结果</strong></td>
+</tr>
+<tr>
+<td align="left"><em>初始的目标是什么？</em></td>
+<td align="left"><em>达成的结果是什么？（一致、不如、超过）</em></td>
+</tr>
+<tr>
+<td align="left">当初行动的意图是什么？ <br> 事件想要达到的目标是什么？</td>
+<td align="left">实际发什了什么事？ <br> 与目标相比，哪些地方做的好？哪些未达预期？</td>
+</tr>
+<tr>
+<td align="left"><em>预期的里程碑计划</em></td>
+<td align="left"><em>实际的里程碑计划</em></td>
+</tr>
+<tr>
+<td align="left">预先制定的计划是什么？ <br> 事先设想要发生的事情是什么？</td>
+<td align="left">实际执行的过程怎样？ <br>  达成的里程碑计划是什么样？</td>
+</tr>
+<tr>
+<td align="left"><strong>总结规律</strong></td>
+<td align="left"><strong>分析原因（客观、主观、偶发、普遍、内部、外部）</strong></td>
+</tr>
+<tr>
+<td align="left"><em>经验&amp;规律</em></td>
+<td align="left"><em>积极原因</em></td>
+</tr>
+<tr>
+<td align="left">我们从过程中学到了什么新东西？ <br> 如果有人进行同样的行动，我会给他什么建议？</td>
+<td align="left">成功的关键因素是什么？</td>
+</tr>
+<tr>
+<td align="left"><em>行动计划</em></td>
+<td align="left"><em>消极原因</em></td>
+</tr>
+<tr>
+<td align="left">开始做：<br> 哪些事情是可以直接行动的？<br> 哪些是其他层级才能处理的？<br> 是否要向上级呈报？<br> 停止做：<br> 继续做：</td>
+<td align="left">为什么会出现这些差异？<br> 是由哪些因素造成？根本原因是什么？</td>
+</tr>
+</tbody></table>
+<p>对需要执行的计划，划分到人头，并且设置完成时间，预计的产出结果：</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>行动</th>
+<th>负责人</th>
+<th>起止时间 <br> （开始 - 结束）</th>
+<th>预期产出/成果</th>
+<th>跟进负责人/时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>形成的复盘文档，知识文档存放在企业的内网知识库，或者飞书，语雀，Confluence，并且最好能够和具体对应的业务，项目做关联。企业内容可以共享相关知识，将属于一个业务，一个项目的知识经验能够转化为企业所有人员的知识经验，减少企业的试错成本和人员培训成本，提升团队成员的整体水平。</p>
+<h2 id="复盘原则"><a href="#复盘原则" class="headerlink" title="复盘原则"></a>复盘原则</h2><ul>
+<li>开放心态：能够听得进意见，减少自我意识，充分收集各方不同意见，找到深层次的原因。</li>
+<li>坦诚表达：复盘要明确不是追责会，复盘也不是表扬会。复盘就只是复盘，就事论事，参加更要参与，到场要发言，鼓励说出真相。</li>
+<li>实事求是：复盘的目的是要弄清楚事情成功与失败的本质原因，不能带有强烈的主观意识和先见。只有实事求是才能真正知道哪里出了问题，哪些做对了，哪些是偶然因素，哪些是可以控制的，哪些经验可以复用。</li>
+<li>反思自我：领导需要以身作则，敢于否定自己，引导开放的讨论氛围，不仅仅关心客观原因，也需要从主观上找原因，寻求更好的处理方法和解决方案。</li>
+<li>集思广益：引入外部人员，也就是没有参与业务的人，有时旁观者能够有外部视角，提出更好的问题，打开思路，引发更多维度的思考。整个复盘过程，进行专人记录，最后输出成果，形成复盘报告，便于组织分享，打造企业知识库，进行经验传承。</li>
+</ul>
+<h2 id="复盘频率"><a href="#复盘频率" class="headerlink" title="复盘频率"></a>复盘频率</h2><ul>
+<li>小事：行动结束后及时进行复盘并制定方案并落实。</li>
+<li>大事：<ul>
+<li>阶段性：大项目在执行中，进行阶段性的复盘，以半个月或一个月为一个阶段，或者以里程碑，关键节点进行复盘，对目标或策略进行监控并及时调整。</li>
+<li>事后：大项目结束后，进行总复盘，总结经验教训，找到规律，形成知识库。</li>
+</ul>
+</li>
+</ul>
+<p> 复盘需要回顾“当初是怎么定目标的，定的什么目标”和“现在做成的结果”之间的差异，然后根据差异分析原因，寻找解决方案，不断地小步迭代，把做过的事情重新推演一遍，通过反思和总结，可以将经历转化为经验，目的总结起来可以分为以下几点：</p>
+<ol>
+<li>知其然和知其所以然</li>
+<li>防控风险</li>
+<li>同样的错误不要再犯</li>
+<li>总结规律和固化流程</li>
+<li>传承经验和提升能力</li>
+<li>提高学习能力，搭建学习组织</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>赏小弟喝杯奶茶(●'◡'●)!!!</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/alipay.png" alt="Long Shiyu 支付宝">
+        <span>支付宝</span>
+      </div>
+      <div>
+        <img src="/images/wechatpay.png" alt="Long Shiyu 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86/" rel="tag"># 团队管理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/thinking/team-management/d06-inspirit/" rel="prev" title="团队管理（六）激励">
+                  <i class="fa fa-chevron-left"></i> 团队管理（六）激励
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/thinking/team-management/d04-management/" rel="next" title="团队管理（四）管理">
+                  团队管理（四）管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Long Shiyu</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"neutral","dark":"neutral"},"js":{"url":"https://unpkg.com/mermaid@8.13.8/dist/mermaid.min.js","integrity":"sha256-QmSAc2kIaUjleIJ46X7qPW2zrpCbXlMz3YIGgWpQ1Jo="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

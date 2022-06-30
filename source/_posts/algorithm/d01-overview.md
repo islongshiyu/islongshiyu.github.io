@@ -158,7 +158,7 @@ public static void main(String[] args) {
 
 ### 需求2
 
-计算10的阶乘。
+计算 `10` 的阶乘。
 
 解法一：
 

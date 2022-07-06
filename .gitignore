@@ -7,3 +7,5 @@ public/*
 resources/*
 node_modules/*
 db.json
+vx.json
+vx_notebook/**
